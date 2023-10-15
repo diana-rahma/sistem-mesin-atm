@@ -1,13 +1,13 @@
 import java.util.Scanner;
 
-public class Menu {
+public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        int New, Old;
+        int New, Past, Now, umur, noRek;
         boolean struk=true;
-        long NominalTransaksi;
-        String Menu;
+        long Nominal, jmlSaldo, sisa;
+        String Menu, nama, asal;
 
         System.out.println("Menu : (Registrasi) (Tarik Tunai) (Informasi Saldo) (Pembayaran) (Ubah PIN)");
         System.out.println("Silahkan Pilih salah satu menu diatas ! ");
@@ -20,13 +20,13 @@ public class Menu {
 
             case "Tarik Tunai":
                 System.out.println(" Masukkan Nominal Transaksi yang anda ingin kan ");
-                NominalTransaksi=input.nextLong();
+                Nominal=input.nextLong();
                 System.out.println(" Apakah anda ingin mencetak struk ?");
                 struk=input.nextBoolean();           
                     if (struk)
-                        System.out.println(" Jangan lupa ambil struk dan uang senilai " + NominalTransaksi);    
+                        System.out.println(" Jangan lupa ambil struk dan uang senilai " + Nominal);    
                     else 
-                        System.out.println(" Jangan lupa ambil uang senilai " + NominalTransaksi);
+                        System.out.println(" Jangan lupa ambil uang senilai " + Nominal);
                 break;
 
             case "Informasi Saldo":
@@ -39,7 +39,7 @@ public class Menu {
 
             case "Ubah PIN":
                 System.out.println("Masukkan PIN lama anda ");
-                Old=input.nextInt();
+                Past=input.nextInt();
                 System.out.println("Masukkan PIN baru anda");
                 New=input.nextInt();
                 System.out.println("Pin anda telah diganti ");
