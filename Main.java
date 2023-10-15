@@ -4,9 +4,9 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        int Now, Past, New, pilihan;
+        int Now, Now2, Past, New, New2, pilihan;
         boolean struk = true;
-        long NominalTransaksi, Nominal;
+        long Nominal, jmlSaldo, sisa;
         String Menu, konfirmasi, Nama;
 
         // apakah pengguna memiliki akun atau tidak
@@ -35,14 +35,14 @@ public class Main {
                 Now=input.nextInt();
 
                 System.out.println("Masukkan PIN anda kembali : ");
-                New=input.nextInt();
+                Now2=input.nextInt();
 
-                if (Now == New) {
+                if (Now == Now2) {
                     System.out.println("Selamat !! Akun anda telah terdaftar");           
                 } else {
                     System.out.println("PIN anda tidak sama ");
                 } 
-            } while (Now != New);
+            } while (Now != Now2);
         }
 
         // Menu
@@ -50,21 +50,19 @@ public class Main {
 
         System.out.println("Menu : (Tarik Tunai) (Informasi Saldo) (Pembayaran) (Ubah PIN)");
         System.out.println("Silahkan Pilih salah satu menu di atas! ");
-        input.nextLine(); 
-        Menu = input.nextLine(); 
+        input.next(); 
+        Menu = input.next(); 
 
         switch (Menu) {
             case "Tarik Tunai":
-                System.out.println("Masukkan Nominal Transaksi yang anda inginkan ");
-                NominalTransaksi = input.nextLong();
-                System.out.println("Masukkan Nominal yang anda ingin tarik ");
+                System.out.println("Masukkan Nominal yang ingin Anda tarik ");
                 Nominal = input.nextLong();
-                System.out.println("Apakah anda ingin mencetak struk ?");
+                System.out.println("Apakah Anda ingin mencetak struk ?");
                 struk = input.nextBoolean();
                 if (struk) {
-                    System.out.println("Jangan lupa ambil struk dan uang senilai " + NominalTransaksi);
+                    System.out.println("Jangan lupa ambil struk dan uang senilai " + Nominal);
                 } else {
-                    System.out.println("Jangan lupa ambil uang senilai " + NominalTransaksi);
+                    System.out.println("Jangan lupa ambil uang senilai " + Nominal);
                 }
                 break;
 
@@ -77,10 +75,27 @@ public class Main {
                 break;
 
             case "Ubah PIN":
-                System.out.println("Masukkan PIN lama anda ");
-                Past = input.nextInt();
-                System.out.println("Masukkan PIN baru anda");
-                New = input.nextInt(); //  mengganti PIN yang lama dengan yang baru.
+                 //  mengganti PIN yang lama dengan yang baru.
+                do {               
+                    System.out.println("Masukkan PIN anda Sekarang : ");
+                    Now=input.nextInt();
+
+                    System.out.println("Masukkan PIN Baru anda : ");
+                    New=input.nextInt();
+
+                    System.out.println("Masukkan kembali PIN Baru Anda ");
+                    New2=input.nextInt();
+                    
+                    if ( Now == New) {
+                        System.out.println("PIN baru anda sama dengan PIN sekarang"); 
+
+                        if (New != New2) {
+                            System.out.println("PIN Baru anda berbeda");
+                        }                              
+                    } 
+                } while ((New != New2) && (Now != New2));
+                
+
                 System.out.println("Pin anda telah diganti ");
                 break;
 
