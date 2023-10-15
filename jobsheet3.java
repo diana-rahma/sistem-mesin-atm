@@ -11,7 +11,7 @@ public class jobsheet3 {
 
         System.out.println("Masukkan jumlah saldo : " );
         jumlah_saldo = sc.nextInt();
-10
+
         System.out.println("Masukkan jumlah nominal tarik : " );
         nominal_tarik = sc.nextInt();
 
