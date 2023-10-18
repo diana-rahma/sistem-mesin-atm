@@ -4,10 +4,10 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        int Now, Now2, Past, New, New2, pilihan;
+        int Now, Now2, Past, New, New2, pilihan, kodeBayar;
         boolean struk = true;
-        long Nominal, jmlSaldo, sisa;
-        String Menu, konfirmasi, Nama;
+        long Nominal, jmlSaldo, sisa, jumlahBayar;
+        String Menu, konfirmasi, Nama, Struk;
 
         // apakah pengguna memiliki akun atau tidak
         System.out.println("Apakah anda memiliki akun? (ada/tidak)");
@@ -46,9 +46,8 @@ public class Main {
         }
 
         // Menu
-        
 
-        System.out.println("Menu : (Tarik Tunai) (Informasi Saldo) (Pembayaran) (Ubah PIN)");
+        System.out.println("Menu : (Tarik Tunai) (Informasi Saldo) (Pembayaran) (Ubah PIN) (Setor Tunai)");
         System.out.println("Silahkan Pilih salah satu menu di atas! ");
         input.next(); 
         Menu = input.next(); 
@@ -71,7 +70,18 @@ public class Main {
                 break;
 
             case "Pembayaran":
-                System.out.println("Silahkan melakukan pembayaran ");
+                System.out.print("Masukkan kode bayar anda : ");
+                kodeBayar = input.nextInt();
+                System.out.print("Masukkan nominal yang akan anda bayar : ");
+                jumlahBayar = input.nextLong();
+                System.out.println("Apakah anda ingin mencetak struk pembayaran? (iya/tidak)");
+                Struk = input.next();
+        
+                if (Struk.equals("iya")) {
+                    System.out.println("Pembayaran telah berhasil! Silahkan ambil struk anda.");
+                } else {
+                    System.out.println("Silahkan kembali ke menu utama");
+                }
                 break;
 
             case "Ubah PIN":
@@ -94,9 +104,21 @@ public class Main {
                         }                              
                     } 
                 } while ((New != New2) && (Now != New2));
-                
-
+            
                 System.out.println("Pin anda telah diganti ");
+                break;
+
+            case "Setor Tunai":
+                System.out.println("Masukkan nominal uang anda : ");
+                Nominal = input.nextLong();
+                System.out.println("Apakah anda ingin untuk mencetak struk? (iya/tidak)"); 
+                Struk = input.next();
+                
+                if (Struk.equals("iya")) {
+                    System.out.println("Silahkan ambil struk anda.");
+                } else {
+                    System.out.println("Silahkan kembali ke menu utama");
+                }
                 break;
 
             default:

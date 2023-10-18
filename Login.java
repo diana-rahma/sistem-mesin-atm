@@ -3,8 +3,9 @@ public class Login {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         int Now=12345678;
-        System.out.println("Masukkan PIN ATM anda: ");
-        Now = input.nextInt();
+        String nama;
+        System.out.println("Masukkan nama anda: ");
+        nama = input.nextLine();
 
         do {
             System.out.println("Masukkan PIN anda : ");
