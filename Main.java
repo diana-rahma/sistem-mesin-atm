@@ -5,7 +5,6 @@ public class Main {
         Scanner input = new Scanner(System.in);
 
         int Now, Now2, Past, New, New2, pilihan, kodeBayar;
-        boolean struk = true;
         long Nominal, jmlSaldo, sisa, jumlahBayar;
         String Menu, konfirmasi, Nama, Struk;
 
@@ -54,12 +53,14 @@ public class Main {
             case "Tarik Tunai":
                 System.out.println("Masukkan Nominal yang ingin Anda tarik ");
                 Nominal = input.nextLong();
-                System.out.println("Apakah Anda ingin mencetak struk ?");
-                struk = input.nextBoolean();
-                if (struk) {
-                    System.out.println("Jangan lupa ambil struk dan uang senilai " + Nominal);
+                
+                System.out.println("Apakah Anda ingin mencetak struk ? iya/tidak");
+                Struk = input.next();
+                
+                if (Struk.equals("iya")) {
+                    System.out.println("Silahkan ambil struk anda.");
                 } else {
-                    System.out.println("Jangan lupa ambil uang senilai " + Nominal);
+                    System.out.println("Silahkan kembali ke menu utama");
                 }
                 break;
 
