@@ -58,9 +58,9 @@ public class Main {
                 Struk = input.next();
                 
                 if (Struk.equals("iya")) {
-                    System.out.println("Silahkan ambil struk anda.");
+                    System.out.println("Silahkan ambil uang senilai" + Nominal + " dan struk anda.");
                 } else {
-                    System.out.println("Silahkan kembali ke menu utama");
+                    System.out.println("Silahkan ambil uang Anda senilai" + Nominal);
                 }
                 break;
 
