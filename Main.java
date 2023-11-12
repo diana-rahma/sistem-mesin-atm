@@ -8,7 +8,7 @@ public class Main {
 
         int Now, Now2, Past, New, New2, pilihan, kodeBayar, kodeInstitusi, noRek;
         long Nominal, jmlSaldo, sisa, jumlahBayar, tagihan;
-        String Menu, konfirmasi, Nama, Struk, next, name, Asal, Profesi, jenisBayar, data;
+        String Menu, konfirmasi, Nama, Struk, next, name, Asal, Profesi, jenisBayar, data, jenisRek;
 
         String[][] Data = new String[5][5];
 
@@ -85,8 +85,8 @@ public class Main {
         System.out.println("1. Ya");
         System.out.println("2. Tidak");
         konfirmasi = input.next("1");
-
         if (konfirmasi.equalsIgnoreCase("1")) {
+
             // Menu
             System.out.println("Menu");
             System.out.println("1. Tarik Tunai ");
@@ -126,8 +126,12 @@ public class Main {
 //Pembayaran
                 case "3":
                     System.out.println("Silahkan pilih jenis pembayaran / pembelian");
-                    System.out.println("(1)Angsuran (2)Asuransi (3)Pajak (4)Kartu Kredit");
-                    jenisBayar = input.nextLine();
+                    System.out.println("1. Angsuran ");
+                    System.out.println("2. Asuransi ");
+                    System.out.println("3. Pajak");
+                    System.out.println("4. Kartu Kredit");
+                    jenisBayar = input.next();
+
                     switch (jenisBayar) {
                         case "1":
                             System.out.print("Masukkan kode institusi : ");
@@ -175,25 +179,25 @@ public class Main {
                                 } else {
                                     System.out.println("Silahkan kembali ke menu");
                                 }
-                            // System.out.println("Pilih jenis rekening : Rekening Tabungan/Rekening Giro ");
-                            // jenisRek = input.next();
-                            // if (jenisRek.equals("Rekening Tabungan")) {
-                            //     System.out.println("Konfirmasi pembayaran dengan tabungan rekening. y/t");
-                            //     konfirmasi = input.next();
-                            //     if (konfirmasi.equals("y")) {
-                            //         System.out.println("Pembayaran akan diproses");
-                            //     } else {
-                            //         System.out.println("Silahkan kembali ke menu");
-                            //     }
-                            // } else if (jenisRek.equals("Rekening Giro")) {
-                            //      System.out.print("Konfirmasi Pembayaran dengan tabungan giro. y/t");
-                            //     konfirmasi = input.next();
-                            //     if (konfirmasi.equals("y")) {
-                            //         System.out.println("Pembayaran akan diproses");
-                            //     } else {
-                            //         System.out.println("Silahkan kembali ke menu");
-                            //     }
-                            // }
+                            System.out.println("Pilih jenis rekening : Rekening Tabungan/Rekening Giro ");
+                            jenisRek = input.next();
+                            if (jenisRek.equals("Rekening Tabungan")) {
+                                System.out.println("Konfirmasi pembayaran dengan tabungan rekening. y/t");
+                                konfirmasi = input.next();
+                                if (konfirmasi.equals("y")) {
+                                    System.out.println("Pembayaran akan diproses");
+                                } else {
+                                    System.out.println("Silahkan kembali ke menu");
+                                }
+                            } else if (jenisRek.equals("Rekening Giro")) {
+                                 System.out.print("Konfirmasi Pembayaran dengan tabungan giro. y/t");
+                                konfirmasi = input.next();
+                                if (konfirmasi.equals("y")) {
+                                    System.out.println("Pembayaran akan diproses");
+                                } else {
+                                    System.out.println("Silahkan kembali ke menu");
+                                }
+                            }
                             break;
 
                         case "4":
@@ -209,11 +213,11 @@ public class Main {
                                 System.out.println("Silahkan kembali ke menu utama");
                             }
                             break;
-                    
-                        default:
-                            break;
-                    }
 
+                        default:
+                        }
+
+                        break;
 // mengganti PIN yang lama dengan yang baru.
                 case "4":
                     do {
@@ -299,6 +303,9 @@ public class Main {
             }
         }
 
-        System.out.println("Terima Kasih telah menggunakan ATM kami :) ");
+        System.out.println("<< Terima Kasih telah menggunakan ATM kami >>");
+        System.out.println("<<<< Jika ingin melakukan Transaksi Lain >>>>");
+        System.out.println("<<<<<<<<<<< Silahkan Run Kembali >>>>>>>>>>>>");
+        System.out.println("<<<<<<<<<<<<<< Terima Kasih >>>>>>>>>>>>>>>>>");
     }
 }
