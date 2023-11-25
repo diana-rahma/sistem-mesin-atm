@@ -3,15 +3,21 @@ import java.util.jar.Attributes.Name;
 import java.util.Arrays;;
 
 public class Main {
+    static String[][] akunUser = {
+        {"Diana", "12345678"},
+        {"Varizky", "87654321"},
+        {"Romy", "12341234"}
+    };
+    static String konfirmasi, data, Struk;
+    static long Nominal;
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
         int Now, Now2, Past, New, New2, pilihan, kodeBayar, kodeInstitusi, noRek, kodeBank, bankTujuan;
-        long Nominal, jmlSaldo, sisa, jumlahBayar, tagihan, nominalTransfer;
+        long jmlSaldo, sisa, jumlahBayar, tagihan, nominalTransfer;
         String Menu, konfirmasi, Nama, Struk, next, name, Asal, Profesi, jenisBayar, data, jenisRek;
 
-        String[][] Data = new String[5][5];
-        long[][] saldo = new long[2][2];
+        long[] saldo = {150000000};
 
         System.out.println("*********************************************");
         System.out.println("**********                         **********");
@@ -37,14 +43,7 @@ public class Main {
         konfirmasi = input.next();
         // Login
         if (konfirmasi.equalsIgnoreCase("1")) {
-            System.out.println("Masukkan Nama anda : ");
-            Nama = input.next();
-
-            do {
-                System.out.println("Masukkan PIN anda : ");
-                Now = input.nextInt();
-            } while (Now != 12345678);
-            // Registrasi
+            login();
         } else {
             System.out.println("Silakan Registrasi terlebih dahulu.");
 
@@ -108,22 +107,13 @@ public class Main {
                 case "1":
                     System.out.println("Masukkan Nominal yang ingin Anda tarik ");
                     Nominal = input.nextLong();
-
-                    System.out.println("Apakah Anda ingin mencetak struk?");
-                    System.out.println("1. Iya");
-                    System.out.println("2. Tidak");
-                    Struk = input.next();
-
-                    if (Struk.equals("1")) {
-                        System.out.println("Silahkan ambil uang senilai" + Nominal + " dan struk anda.");
-                    } else {
-                        System.out.println("Silahkan ambil uang Anda senilai" + Nominal);
-                    }
+                    Struk();
+                    
                     break;
 
                 // Informasi Saldo
                 case "2":
-                    System.out.println("Saldo anda tersisa: XXXXXXXXXXXX ");
+                    System.out.println("Saldo anda tersisa : " +saldo[0]);
                     break;
 
                 // Pembayaran
@@ -143,15 +133,7 @@ public class Main {
                             kodeBayar = input.nextInt();
                             System.out.print("Masukkan Jumlah bayar anda : ");
                             jumlahBayar = input.nextLong();
-                            System.out.println("Apakah anda yakin untuk melakukan transaksi?");
-                            System.out.println("1. Iya");
-                            System.out.println("2. Tidak");
-                            data = input.next();
-                            if (data.equals("1")) {
-                                System.out.println("Pembayaran akan diproses");
-                            } else {
-                                System.out.println("Silahkan kembali ke menu utama");
-                            }
+                            opsiTransaksi();
                             break;
 
                         case "2":
@@ -161,15 +143,7 @@ public class Main {
                             kodeBayar = input.nextInt();
                             System.out.println("Masukkan jumlah tagihan yang akan dibayar");
                             tagihan = input.nextLong();
-                            System.out.println("Konfirmasi pembayaraan anda");
-                            System.out.println("1. Iya");
-                            System.out.println("2. Tidak");
-                            konfirmasi = input.next();
-                            if (konfirmasi.equals("1")) {
-                                System.out.println("Pembayaran akan diproses");
-                            } else {
-                                System.out.println("Silahkan kembali ke menu utama");
-                            }
+                            opsiTransaksi();
                             break;
 
                         case "3":
@@ -183,37 +157,13 @@ public class Main {
                             System.out.println("3. Lainnya");
                             jenisRek = input.next();
                             if (jenisRek.equals("1")) {
-                                System.out.println("Konfirmasi pembayaran dengan tabungan rekening.");
-                                System.out.println("1. Iya");
-                                System.out.println("2. Tidak");
-                                konfirmasi = input.next();
-                                if (konfirmasi.equals("1")) {
-                                    System.out.println("Pembayaran akan diproses");
-                                } else {
-                                    System.out.println("Silahkan kembali ke menu");
-                                }
+                                konfirmasiPembayaran();
                             } else if (jenisRek.equals("2")) {
-                                System.out.print("Konfirmasi Pembayaran dengan tabungan giro");
-                                System.out.println("1. Iya");
-                                System.out.println("2. Tidak");
-                                konfirmasi = input.next();
-                                if (konfirmasi.equals("1")) {
-                                    System.out.println("Pembayaran akan diproses");
-                                } else {
-                                    System.out.println("Silahkan kembali ke menu");
-                                }
+                                konfirmasiPembayaran();
                             }  else {
                                 System.out.println("Masukkan jenis rekening tabungan anda : ");
                                 jenisRek = input.next();
-                                System.out.println("Konfirmasi Pembayaran dengan tabungan tersebut");
-                                System.out.println("1. Iya");
-                                System.out.println("2. Tidak");
-                                konfirmasi = input.next();
-                                if (konfirmasi.equals("1")) {
-                                    System.out.println("Pembayaran akan diproses");
-                                } else {
-                                    System.out.println("Silahkan kembali ke menu");
-                                }
+                                konfirmasiPembayaran();
                             }
                             break;
 
@@ -222,15 +172,7 @@ public class Main {
                             noRek = input.nextInt();
                             System.out.print("Masukkan nominal pembayaran yang harus dibayar : ");
                             jumlahBayar = input.nextLong();
-                            System.out.println("Apakah anda yakin ingin membayar tagihan?");
-                            System.out.println("1. Iya");
-                            System.out.println("2. Tidak");
-                            data = input.next();
-                            if (data.equals("1")) {
-                                System.out.println("Pembayaran akan diproses");
-                            } else {
-                                System.out.println("Silahkan kembali ke menu utama");
-                            }
+                            opsiTransaksi();
                             break;
 
                         default:
@@ -353,4 +295,77 @@ public class Main {
         System.out.println("<<<<<<<<<<< Silahkan Run Kembali >>>>>>>>>>>>");
         System.out.println("<<<<<<<<<<<<<< Terima Kasih >>>>>>>>>>>>>>>>>");
     }
-}
+
+    // Cetak Struk
+    static void Struk() {
+        Scanner sc = new Scanner(System.in);
+            System.out.println("Apakah Anda ingin mencetak struk?");        
+            System.out.println("1. Iya");
+            System.out.println("2. Tidak");
+            Struk = sc.next();
+
+            if (Struk.equals("1")) {
+                System.out.println("Silahkan ambil uang senilai "+ Nominal +" dan struk anda.");
+            } else {
+                System.out.println("Silahkan ambil uang Anda senilai");
+            }
+    }
+    // End Cetak Struk
+
+    // Login User
+    public static void login() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Masukkan nama: ");
+        String nama = sc.next();
+        System.out.print("Masukkan PIN: ");
+        String pinUser = sc.next();
+
+        boolean status = cek(nama, pinUser);
+
+        if (status) {
+            System.out.println("Login berhasil! Selamat datang, " + nama + "!");
+        } else {
+            System.out.println("Login gagal. Nama atau PIN  salah.");
+        }
+    }
+    public static boolean cek(String nama, String pinUser) {
+        for (String[] user : akunUser) {
+            if (user[0].equals(nama) && user[1].equals(pinUser)) {
+                return true; 
+            }
+        }
+        return false;
+    }
+    // End Login User 
+
+
+    // Konfirmasi pembayaran jenis tabungan
+    public static void konfirmasiPembayaran() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Konfirmasi pembayaran dengan tabungan tersebut");
+            System.out.println("1. Iya");
+            System.out.println("2. Tidak");
+            konfirmasi = sc.next();
+            if (konfirmasi.equals("1")) {
+                System.out.println("Pembayaran akan diproses");
+            } else {
+                System.out.println("Silahkan kembali ke menu");
+            }
+    }
+    //  End konfirmasi pembayaran jenis tabungan
+
+    // Konfirmasi transaksi pengguna
+    public static void opsiTransaksi(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Apakah anda yakin untuk melakukan transaksi?");
+            System.out.println("1. Iya");
+            System.out.println("2. Tidak");
+            data = sc.next();
+            if (data.equals("1")) {
+                System.out.println("Pembayaran akan diproses");
+            } else {
+                System.out.println("Silahkan kembali ke menu utama");
+            }
+    }
+    // End Konfirmasi transaksi pengguna
+}  
