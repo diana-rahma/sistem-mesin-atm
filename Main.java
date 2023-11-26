@@ -4,17 +4,18 @@ import java.util.Arrays;;
 
 public class Main {
     static String[][] akunUser = {
-        {"Diana", "12345678"},
-        {"Varizky", "87654321"},
-        {"Romy", "12341234"}
-    };
+    {"Diana", "12345678", "150000000"},
+    {"Varizky", "87654321", "200000000"},
+    {"Romy", "12341234", "100000000"}
+};
+
     static String konfirmasi, data, Struk;
-    static long Nominal;
+    static long jmlSaldo = 150000000;
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
         int Now, Now2, Past, New, New2, pilihan, kodeBayar, kodeInstitusi, noRek, kodeBank, bankTujuan;
-        long jmlSaldo, sisa, jumlahBayar, tagihan, nominalTransfer;
+        long Nominal, sisa, jumlahBayar, tagihan, nominalTransfer;
         String Menu, konfirmasi, Nama, Struk, next, name, Asal, Profesi, jenisBayar, data, jenisRek;
 
         long[] saldo = {150000000};
@@ -102,14 +103,20 @@ public class Main {
             input.nextLine();
 
             Menu = input.nextLine();
-            // Tarik Tunai
             switch (Menu) {
+            // Tarik Tunai
                 case "1":
                     System.out.println("Masukkan Nominal yang ingin Anda tarik ");
-                    Nominal = input.nextLong();
-                    Struk();
-                    
-                    break;
+        Nominal = input.nextLong();
+
+        if (Nominal > jmlSaldo) {
+            System.out.println("Maaf, saldo tidak mencukupi.");
+        } else {
+            jmlSaldo -= Nominal;
+            updateSaldo(Nama, jmlSaldo);
+            Struk(Nominal, Nama, Struk); // Memperbaiki pemanggilan fungsi Struk
+        }
+        break;
 
                 // Informasi Saldo
                 case "2":
@@ -297,18 +304,14 @@ public class Main {
     }
 
     // Cetak Struk
-    static void Struk() {
-        Scanner sc = new Scanner(System.in);
-            System.out.println("Apakah Anda ingin mencetak struk?");        
-            System.out.println("1. Iya");
-            System.out.println("2. Tidak");
-            Struk = sc.next();
-
-            if (Struk.equals("1")) {
-                System.out.println("Silahkan ambil uang senilai "+ Nominal +" dan struk anda.");
-            } else {
-                System.out.println("Silahkan ambil uang Anda senilai");
-            }
+    static void Struk(long Nominal, String Nama, String Struk) {
+        if (Struk.equals("1")) {
+            System.out.println("Silahkan ambil uang senilai " + Nominal + " dan struk anda.");
+            System.out.println("Sisa saldo anda sekarang: " + getSaldo(Nama));
+        } else {
+            System.out.println("Silahkan ambil uang Anda senilai " + Nominal);
+            System.out.println("Sisa saldo anda sekarang: " + getSaldo(Nama));
+        }
     }
     // End Cetak Struk
 
@@ -328,10 +331,11 @@ public class Main {
             System.out.println("Login gagal. Nama atau PIN  salah.");
         }
     }
+    
     public static boolean cek(String nama, String pinUser) {
         for (String[] user : akunUser) {
             if (user[0].equals(nama) && user[1].equals(pinUser)) {
-                return true; 
+                return true;
             }
         }
         return false;
@@ -368,4 +372,22 @@ public class Main {
             }
     }
     // End Konfirmasi transaksi pengguna
-}  
+
+    static void updateSaldo(String nama, long newSaldo) {
+        for (String[] user : akunUser) {
+            if (user[0].equals(nama)) {
+                user[2] = String.valueOf(newSaldo);
+                break;
+            }
+        }
+    }
+
+    static long getSaldo(String nama) {
+        for (String[] user : akunUser) {
+            if (user[0].equals(nama)) {
+                return Long.parseLong(user[2]);
+            }
+        }
+        return 0;
+    }
+}
