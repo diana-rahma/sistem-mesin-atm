@@ -69,18 +69,22 @@ public class Main {
             Menu = input.nextLine();
             switch (Menu) {
             // Tarik Tunai
-                case "1":
-                    System.out.println("Masukkan Nominal yang ingin Anda tarik ");
-            Nominal = input.nextLong();
+            case "1":
+            
+            System.out.println("Masukkan Nama anda");
+            Nama = input.nextLine();
 
+            System.out.println("Masukkan Nominal yang ingin Anda tarik ");
+            Nominal = input.nextLong();
+        
             if (Nominal > jmlSaldo) {
-            System.out.println("Maaf, saldo tidak mencukupi.");
+                System.out.println("Maaf, saldo tidak mencukupi.");
             } else {
-            // jmlSaldo -= Nominal;
-            // updateSaldo(Nama, jmlSaldo);
-            // Struk(Nominal, Nama, Struk); // Memperbaiki pemanggilan fungsi Struk
+                jmlSaldo -= Nominal;
+                updateSaldo(Nama, jmlSaldo);
+                Struk(Nominal, Nama);
+                break;
             }
-            break;
 
                 // Informasi Saldo
                 case "2":
@@ -268,7 +272,7 @@ public class Main {
     }
 
     // Cetak Struk
-    static void Struk(long Nominal, String Nama, String Struk) {
+    static void Struk(long Nominal, String Nama) {
         if (Struk.equals("1")) {
             System.out.println("Silahkan ambil uang senilai " + Nominal + " dan struk anda.");
             System.out.println("Sisa saldo anda sekarang: " + getSaldo(Nama));
