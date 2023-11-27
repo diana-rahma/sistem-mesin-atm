@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import java.util.jar.Attributes.Name;
+
 import java.util.Arrays;;
 
 public class Main {
@@ -9,39 +9,25 @@ public class Main {
     {"Romy", "12341234", "100000000"}
 };
 
-    static String konfirmasi, data, Struk;
+    static String konfirmasi, Struk;
     static long jmlSaldo = 150000000;
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
         int Now, Now2, Past, New, New2, pilihan, kodeBayar, kodeInstitusi, noRek, kodeBank, bankTujuan;
         long Nominal, sisa, jumlahBayar, tagihan, nominalTransfer;
-        String Menu, konfirmasi, Nama, Struk, next, name, Asal, Profesi, jenisBayar, data, jenisRek;
+        String Menu, Nama, Struk, Asal, Profesi, jenisBayar, jenisRek;
 
-        long[] saldo = {150000000};
 
-        System.out.println("*********************************************");
-        System.out.println("**********                         **********");
-        System.out.println("**********            ***          **********");
-        System.out.println("**********          *****          **********");
-        System.out.println("**********        *******          **********");
-        System.out.println("**********      **  *****          **********");
-        System.out.println("**********    *     *****          **********");
-        System.out.println("**********          *****          **********");
-        System.out.println("**********          *****          **********");
-        System.out.println("**********          *****          **********");
-        System.out.println("**********     ***************     **********");
-        System.out.println("**********    *****************    **********");
-        System.out.println("**********                         **********");
         System.out.println("*********************************************");
         System.out.println("*             SISTEM MESIN ATM              *");
         System.out.println("*********************************************");
-        System.out.println("                                             ");
+    
         // apakah pengguna memiliki akun atau tidak
         System.out.println("Apakah anda memiliki akun? ");
         System.out.println("1. Ya");
         System.out.println("2. Tidak");
-        konfirmasi = input.next();
+        String konfirmasi = input.next();
         // Login
         if (konfirmasi.equalsIgnoreCase("1")) {
             login();
@@ -51,35 +37,13 @@ public class Main {
             System.out.println("Masukkan Nama Anda : ");
             Nama = input.next();
 
-            while (true) {
+            System.out.println("Darimana Anda Berasal : ");
+            Asal = input.next();
 
-                System.out.println("Darimana Anda Berasal : ");
-                Asal = input.next();
+            System.out.println("Apa Profesi Anda : ");
+            Profesi = input.next();
 
-                System.out.println("Apa Profesi Anda : ");
-                Profesi = input.next();
-
-                break;
-            }
-
-            do {
-                System.out.println("Masukkan PIN anda : ");
-                Now = input.nextInt();
-
-                System.out.println("Masukkan PIN anda kembali : ");
-                Now2 = input.nextInt();
-
-                if (Now == Now2) {
-                    System.out.println("Selamat !! Akun anda telah terdaftar");
-                    System.out.println("Nama = " + Nama);
-                    System.out.println("Asal = " + Asal);
-                    System.out.println("Profesi = " + Profesi);
-                } else {
-                    System.out.println("PIN anda tidak sama ");
-                }
-
-            } while (Now != Now2);
-
+            register(Nama, Asal, Profesi);
         }
 
         System.out.println("Apakah ingin melanjutkan Transaksi ?");
@@ -107,20 +71,20 @@ public class Main {
             // Tarik Tunai
                 case "1":
                     System.out.println("Masukkan Nominal yang ingin Anda tarik ");
-        Nominal = input.nextLong();
+            Nominal = input.nextLong();
 
-        if (Nominal > jmlSaldo) {
+            if (Nominal > jmlSaldo) {
             System.out.println("Maaf, saldo tidak mencukupi.");
-        } else {
-            jmlSaldo -= Nominal;
-            updateSaldo(Nama, jmlSaldo);
-            Struk(Nominal, Nama, Struk); // Memperbaiki pemanggilan fungsi Struk
-        }
-        break;
+            } else {
+            // jmlSaldo -= Nominal;
+            // updateSaldo(Nama, jmlSaldo);
+            // Struk(Nominal, Nama, Struk); // Memperbaiki pemanggilan fungsi Struk
+            }
+            break;
 
                 // Informasi Saldo
                 case "2":
-                    System.out.println("Saldo anda tersisa : " +saldo[0]);
+                    System.out.println("Saldo anda tersisa : " );
                     break;
 
                 // Pembayaran
@@ -316,7 +280,7 @@ public class Main {
     // End Cetak Struk
 
     // Login User
-    public static void login() {
+    static void login() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Masukkan nama: ");
         String nama = sc.next();
@@ -327,12 +291,16 @@ public class Main {
 
         if (status) {
             System.out.println("Login berhasil! Selamat datang, " + nama + "!");
+            // Tambahkan logika untuk menu transaksi setelah login berhasil
         } else {
             System.out.println("Login gagal. Nama atau PIN  salah.");
         }
     }
     
-    public static boolean cek(String nama, String pinUser) {
+    // End Login User 
+    
+    // Fungsi cek akun user
+    static boolean cek(String nama, String pinUser) {
         for (String[] user : akunUser) {
             if (user[0].equals(nama) && user[1].equals(pinUser)) {
                 return true;
@@ -340,11 +308,9 @@ public class Main {
         }
         return false;
     }
-    // End Login User 
-
 
     // Konfirmasi pembayaran jenis tabungan
-    public static void konfirmasiPembayaran() {
+    static void konfirmasiPembayaran() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Konfirmasi pembayaran dengan tabungan tersebut");
             System.out.println("1. Iya");
@@ -359,17 +325,17 @@ public class Main {
     //  End konfirmasi pembayaran jenis tabungan
 
     // Konfirmasi transaksi pengguna
-    public static void opsiTransaksi(){
+    static void opsiTransaksi(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Apakah anda yakin untuk melakukan transaksi?");
-            System.out.println("1. Iya");
-            System.out.println("2. Tidak");
-            data = sc.next();
-            if (data.equals("1")) {
-                System.out.println("Pembayaran akan diproses");
-            } else {
-                System.out.println("Silahkan kembali ke menu utama");
-            }
+        System.out.println("1. Iya");
+        System.out.println("2. Tidak");
+        String data = sc.next();
+        if (data.equals("1")) {
+            System.out.println("Pembayaran akan diproses");
+        } else {
+            System.out.println("Silahkan kembali ke menu utama");
+        }
     }
     // End Konfirmasi transaksi pengguna
 
@@ -390,4 +356,30 @@ public class Main {
         }
         return 0;
     }
+
+    static void register(String nama, String asal, String profesi) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Masukkan PIN anda : ");
+        String now = sc.next();
+        System.out.println("Masukkan PIN anda kembali : ");
+        String now2 = sc.next();
+
+        if (now.equals(now2)) {
+            System.out.println("Selamat !! Akun anda telah terdaftar");
+            System.out.println("Nama = " + nama);
+            System.out.println("Asal = " + asal);
+            System.out.println("Profesi = " + profesi);
+
+            String[] akunBaru = {nama, now, "0"}; // Saldo awal = 0
+            akunUser = Arrays.copyOf(akunUser, akunUser.length + 1);
+            akunUser[akunUser.length - 1] = akunBaru;
+        } else {
+            System.out.println("PIN anda tidak sama ");
+        }
+    }
 }
+
+    
+
+
