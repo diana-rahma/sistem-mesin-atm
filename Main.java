@@ -248,7 +248,7 @@ public class Main {
 
                         System.out.println("Masukkan PIN anda kembali : ");
                         Now2 = input.nextInt();
-
+                        
                         if (Now == Now2) {
                             System.out.println("Selamat !! Akun anda telah terdaftar");
                             System.out.println("Nama = " + Nama);
@@ -260,7 +260,7 @@ public class Main {
 
                     } while (Now != Now2);
 
-                default:
+                    default:
                     System.out.println("Menu tidak tersedia ");
             }
         }
@@ -271,17 +271,8 @@ public class Main {
         System.out.println("<<<<<<<<<<<<<< Terima Kasih >>>>>>>>>>>>>>>>>");
     }
 
-    // Cetak Struk
-    static void Struk(long Nominal, String Nama) {
-        if (Struk.equals("1")) {
-            System.out.println("Silahkan ambil uang senilai " + Nominal + " dan struk anda.");
-            System.out.println("Sisa saldo anda sekarang: " + getSaldo(Nama));
-        } else {
-            System.out.println("Silahkan ambil uang Anda senilai " + Nominal);
-            System.out.println("Sisa saldo anda sekarang: " + getSaldo(Nama));
-        }
-    }
-    // End Cetak Struk
+
+    //FUNGSI FUNGSI AN
 
     // Login User
     static void login() {
@@ -312,6 +303,65 @@ public class Main {
         }
         return false;
     }
+
+    static void register(String nama, String asal, String profesi) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Masukkan PIN anda : ");
+        String now = sc.next();
+        System.out.println("Masukkan PIN anda kembali : ");
+        String now2 = sc.next();
+
+        if (now.equals(now2)) {
+            System.out.println("Selamat !! Akun anda telah terdaftar");
+            System.out.println("Nama = " + nama);
+            System.out.println("Asal = " + asal);
+            System.out.println("Profesi = " + profesi);
+
+            String[] akunBaru = {nama, now, "0"}; // Saldo awal = 0
+            akunUser = Arrays.copyOf(akunUser, akunUser.length + 1);
+            akunUser[akunUser.length - 1] = akunBaru;
+        } else {
+            System.out.println("PIN anda tidak sama ");
+        }
+    }
+  // Menu
+
+            // System.out.println("1. Tarik Tunai ");
+    static void tarikTunai() {
+                
+            }
+
+            // System.out.println("2. Informasi Saldo");
+
+    static void InformasiSaldo() {
+                
+            }
+
+            // System.out.println("3. Pembayaran");
+
+    static void pembayaran() {
+                
+            }
+            // System.out.println("4. Ubah PIN");
+
+    static void ubahPIN() {
+                
+            }
+
+            // System.out.println("5. Setor Tunai");
+
+
+    static void penyetoran() {
+                
+            }
+
+            // System.out.println("6. Transfer");
+
+    static void Transfer() {
+                
+            }
+            
 
     // Konfirmasi pembayaran jenis tabungan
     static void konfirmasiPembayaran() {
@@ -361,27 +411,17 @@ public class Main {
         return 0;
     }
 
-    static void register(String nama, String asal, String profesi) {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("Masukkan PIN anda : ");
-        String now = sc.next();
-        System.out.println("Masukkan PIN anda kembali : ");
-        String now2 = sc.next();
-
-        if (now.equals(now2)) {
-            System.out.println("Selamat !! Akun anda telah terdaftar");
-            System.out.println("Nama = " + nama);
-            System.out.println("Asal = " + asal);
-            System.out.println("Profesi = " + profesi);
-
-            String[] akunBaru = {nama, now, "0"}; // Saldo awal = 0
-            akunUser = Arrays.copyOf(akunUser, akunUser.length + 1);
-            akunUser[akunUser.length - 1] = akunBaru;
+    // Cetak Struk
+    static void Struk(long Nominal, String Nama) {
+        if (Struk.equals("1")) {
+            System.out.println("Silahkan ambil uang senilai " + Nominal + " dan struk anda.");
+            System.out.println("Sisa saldo anda sekarang: " + getSaldo(Nama));
         } else {
-            System.out.println("PIN anda tidak sama ");
+            System.out.println("Silahkan ambil uang Anda senilai " + Nominal);
+            System.out.println("Sisa saldo anda sekarang: " + getSaldo(Nama));
         }
     }
+    // End Cetak Struk
 }
 
     
