@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Transfer {
+public class biayaAdmin {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         long nominalTransfer;
@@ -25,6 +25,7 @@ public class Transfer {
             }
         } else {
             System.out.println("Biaya admin 15000");
-        }
-    }
+        }
+    }
 }
+

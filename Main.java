@@ -12,7 +12,7 @@ public class Main {
     static String konfirmasi, Struk;
     static long jmlSaldo = 150000000;
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
         int Now, Now2, Past, New, New2, pilihan, kodeBayar, kodeInstitusi, noRek, kodeBank, bankTujuan;
         long Nominal, sisa, jumlahBayar, tagihan, nominalTransfer;
@@ -27,30 +27,24 @@ public class Main {
         System.out.println("Apakah anda memiliki akun? ");
         System.out.println("1. Ya");
         System.out.println("2. Tidak");
-        String konfirmasi = input.next();
+        String konfirmasi = sc.next();
         // Login
         if (konfirmasi.equalsIgnoreCase("1")) {
             login();
         } else {
-            System.out.println("Silakan Registrasi terlebih dahulu.");
-
-            System.out.println("Masukkan Nama Anda : ");
-            Nama = input.next();
-
-            System.out.println("Darimana Anda Berasal : ");
-            Asal = input.next();
-
-            System.out.println("Apa Profesi Anda : ");
-            Profesi = input.next();
-
-            register(Nama, Asal, Profesi);
-        }
+            System.out.print("Masukkan Nama Anda : ");
+            Nama = sc.nextLine();
+            System.out.print("Masukkan Asal Anda : ");
+            Asal = sc.nextLine();
+            System.out.print("Masukkan Profesi Anda : ");
+            Profesi = sc.nextLine();
+            registrasi(Nama , Asal , Profesi);
 
         System.out.println("Apakah ingin melanjutkan Transaksi ?");
         System.out.println("1. Ya");
         System.out.println("2. Tidak");
-        konfirmasi = input.next("1");
-        if (konfirmasi.equalsIgnoreCase("1")) {
+        konfirmasi = sc.next("1");
+        if (konfirmasi.equals("1")) {
 
             // Menu
             System.out.println("Menu");
@@ -64,28 +58,23 @@ public class Main {
             System.out.println("0. Keluar");
 
             System.out.println("Silahkan Pilih salah satu menu di atas! ");
-            input.nextLine();
+            sc.nextLine();
 
-            Menu = input.nextLine();
+            Menu = sc.nextLine();
             switch (Menu) {
             // Tarik Tunai
             case "1":
             
             System.out.println("Masukkan Nama anda");
-            Nama = input.nextLine();
+            Nama = sc.nextLine();
 
             System.out.println("Masukkan Nominal yang ingin Anda tarik ");
-            Nominal = input.nextLong();
-        
-            if (Nominal > jmlSaldo) {
-                System.out.println("Maaf, saldo tidak mencukupi.");
-            } else {
-                jmlSaldo -= Nominal;
-                updateSaldo(Nama, jmlSaldo);
-                Struk(Nominal, Nama);
-                break;
-            }
+            Nominal = sc.nextLong();
+                
+            tarikTunai(Nama , Nominal);
+            break;
 
+    
                 // Informasi Saldo
                 case "2":
                     System.out.println("Saldo anda tersisa : " );
@@ -98,55 +87,55 @@ public class Main {
                     System.out.println("2. Asuransi ");
                     System.out.println("3. Pajak");
                     System.out.println("4. Kartu Kredit");
-                    jenisBayar = input.next();
+                    jenisBayar = sc.next();
 
                     switch (jenisBayar) {
                         case "1":
                             System.out.print("Masukkan kode institusi : ");
-                            kodeInstitusi = input.nextInt();
+                            kodeInstitusi = sc.nextInt();
                             System.out.print("Masukkan kode pembayaran : ");
-                            kodeBayar = input.nextInt();
+                            kodeBayar = sc.nextInt();
                             System.out.print("Masukkan Jumlah bayar anda : ");
-                            jumlahBayar = input.nextLong();
+                            jumlahBayar = sc.nextLong();
                             opsiTransaksi();
                             break;
 
                         case "2":
                             System.out.print("Masukkan kode institusi : ");
-                            kodeInstitusi = input.nextInt();
+                            kodeInstitusi = sc.nextInt();
                             System.out.print("Masukkan kode pembayaran : ");
-                            kodeBayar = input.nextInt();
+                            kodeBayar = sc.nextInt();
                             System.out.println("Masukkan jumlah tagihan yang akan dibayar");
-                            tagihan = input.nextLong();
+                            tagihan = sc.nextLong();
                             opsiTransaksi();
                             break;
 
                         case "3":
                             System.out.print("Masukkan kode tagihan : ");
-                            tagihan = input.nextLong();
+                            tagihan = sc.nextLong();
                             System.out.println("Masukkan jumlah tagihan");
-                            tagihan = input.nextLong();
+                            tagihan = sc.nextLong();
                             System.out.println("Pilih jenis rekening : ");
                             System.out.println("1. Rekening Tabungan");
                             System.out.println("2. Rekening Giro");
                             System.out.println("3. Lainnya");
-                            jenisRek = input.next();
+                            jenisRek = sc.next();
                             if (jenisRek.equals("1")) {
                                 konfirmasiPembayaran();
                             } else if (jenisRek.equals("2")) {
                                 konfirmasiPembayaran();
                             }  else {
                                 System.out.println("Masukkan jenis rekening tabungan anda : ");
-                                jenisRek = input.next();
+                                jenisRek = sc.next();
                                 konfirmasiPembayaran();
                             }
                             break;
 
                         case "4":
                             System.out.print("Masukkan nomor kartu kredit yang akan dibayar : ");
-                            noRek = input.nextInt();
+                            noRek = sc.nextInt();
                             System.out.print("Masukkan nominal pembayaran yang harus dibayar : ");
-                            jumlahBayar = input.nextLong();
+                            jumlahBayar = sc.nextLong();
                             opsiTransaksi();
                             break;
 
@@ -158,13 +147,13 @@ public class Main {
                 case "4":
                     do {
                         System.out.println("Masukkan PIN anda Sekarang : ");
-                        Now = input.nextInt();
+                        Now = sc.nextInt();
 
                         System.out.println("Masukkan PIN Baru anda : ");
-                        New = input.nextInt();
+                        New = sc.nextInt();
 
                         System.out.println("Masukkan kembali PIN Baru Anda ");
-                        New2 = input.nextInt();
+                        New2 = sc.nextInt();
 
                         if (Now == New) {
                             System.out.println("PIN baru anda sama dengan PIN sekarang");
@@ -181,11 +170,11 @@ public class Main {
                 // Setor Tunai
                 case "5":
                     System.out.println("Masukkan nominal uang anda : ");
-                    Nominal = input.nextLong();
+                    Nominal = sc.nextLong();
                     System.out.println("Apakah anda ingin untuk mencetak struk?");
                     System.out.println("1. Iya");
                     System.out.println("2. Tidak");
-                    Struk = input.next();
+                    Struk = sc.next();
                     if (Struk.equals("1")) {
                         System.out.println("Silahkan ambil struk anda.");
                     } else {
@@ -196,11 +185,11 @@ public class Main {
                 // Transfer
                 case "6":
                 System.out.println("Masukkan kode bank anda");
-                kodeBank = input.nextInt();
+                kodeBank = sc.nextInt();
                 System.out.println("Masukkan kode bank tujuan anda: ");
-                bankTujuan = input.nextInt();
+                bankTujuan = sc.nextInt();
                 System.out.println("Masukkan nominal transfer anda");
-                nominalTransfer = input.nextLong();
+                nominalTransfer = sc.nextLong();
                 
                     for (int i = 1; i <= 2; i++) {
                         for (int j = 1; j <= 2; j++) {
@@ -229,25 +218,25 @@ public class Main {
                     System.out.println("Silakan Registrasi terlebih dahulu.");
 
                     System.out.println("Masukkan Nama Anda : ");
-                    Nama = input.next();
+                    Nama = sc.next();
 
                     while (true) {
 
                         System.out.println("Darimana Anda Berasal : ");
-                        Asal = input.next();
+                        Asal = sc.next();
 
                         System.out.println("Apa Profesi Anda : ");
-                        Profesi = input.next();
+                        Profesi = sc.next();
 
                         break;
                     }
 
                     do {
                         System.out.println("Masukkan PIN anda : ");
-                        Now = input.nextInt();
+                        Now = sc.nextInt();
 
                         System.out.println("Masukkan PIN anda kembali : ");
-                        Now2 = input.nextInt();
+                        Now2 = sc.nextInt();
                         
                         if (Now == Now2) {
                             System.out.println("Selamat !! Akun anda telah terdaftar");
@@ -270,8 +259,7 @@ public class Main {
         System.out.println("<<<<<<<<<<< Silahkan Run Kembali >>>>>>>>>>>>");
         System.out.println("<<<<<<<<<<<<<< Terima Kasih >>>>>>>>>>>>>>>>>");
     }
-
-
+    }
     //FUNGSI FUNGSI AN
 
     // Login User
@@ -304,8 +292,9 @@ public class Main {
         return false;
     }
 
-    static void register(String nama, String asal, String profesi) {
+    static void registrasi(String Nama, String Asal, String Profesi) {
         Scanner sc = new Scanner(System.in);
+
 
         System.out.println("Masukkan PIN anda : ");
         String now = sc.next();
@@ -314,11 +303,11 @@ public class Main {
 
         if (now.equals(now2)) {
             System.out.println("Selamat !! Akun anda telah terdaftar");
-            System.out.println("Nama = " + nama);
-            System.out.println("Asal = " + asal);
-            System.out.println("Profesi = " + profesi);
+            System.out.println("Nama = " + Nama);
+            System.out.println("Asal = " + Asal);
+            System.out.println("Profesi = " + Profesi);
 
-            String[] akunBaru = {nama, now, "0"}; // Saldo awal = 0
+            String[] akunBaru = {Nama, now, "0"}; // Saldo awal = 0
             akunUser = Arrays.copyOf(akunUser, akunUser.length + 1);
             akunUser[akunUser.length - 1] = akunBaru;
         } else {
@@ -328,7 +317,16 @@ public class Main {
   // Menu
 
             // System.out.println("1. Tarik Tunai ");
-    static void tarikTunai() {
+    static void tarikTunai(String Nama, long Nominal) {
+
+        if (Nominal > jmlSaldo) {
+                System.out.println("Maaf, saldo tidak mencukupi.");
+            } else {
+                jmlSaldo -= Nominal;
+                updateSaldo(Nama, jmlSaldo);
+                Struk(Nominal, Nama);
+                
+            }
                 
             }
 
