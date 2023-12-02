@@ -30,11 +30,10 @@ public class Main {
         String konfirmasi = sc.next();
         // Login
         if (konfirmasi.equals("1")) {
-            System.out.print("Nama : ");
-            Nama = sc.next();
-            System.out.print(" PIN : ");
-            String pin = sc.next();
-            login(Nama, pin);
+            boolean loginBerhasil = false;
+            do {
+                loginBerhasil = login();
+            } while (!loginBerhasil);
          
         // Registrasi   
         } else if (konfirmasi.equals("2")){
@@ -50,8 +49,6 @@ public class Main {
             registrasi(Nama, Asal, Profesi);
         } 
         
-        
-
         switch (menu()) {
                 // Tarik Tunai
                 case "1":
@@ -182,24 +179,28 @@ public class Main {
     // FUNGSI FUNGSI AN
 
     // Login User
+    static boolean login() {
+        System.out.print("Masukkan nama : ");
+        String nama = sc.next();
+        System.out.print("Masukkan PIN  : ");
+        String pinUser = sc.next();
+        boolean status = login(nama, pinUser);
+        if (status) {
+            System.out.println("Login berhasil! Selamat datang, " + nama + "!");
+            return true; 
+        } else {
+            System.out.println("Login gagal. Nama atau PIN  salah.");
+            return false;
+        }
+    }
+
     static boolean login(String nama, String pinUser) {
         for (int i = 0; i < akunUser.length; i++) {
             if (akunUser[i][0].equals(nama) && akunUser[i][1].equals(pinUser)) {
                 return true; 
             }
         }
-    
-        //pengecekan nama akun
-        if (nama.equalsIgnoreCase("Varizky") || nama.equalsIgnoreCase("Diana") || nama.equalsIgnoreCase("Romy")) {                    
-            return true; 
-        }
-
-        if (pinUser.equals(87654321) || pinUser.equals(12345678) || pinUser.equals(12341234)) {
-            return true;
-
-        }
-    
-        return false; 
+        return false;
     }
 
     // End Login User
