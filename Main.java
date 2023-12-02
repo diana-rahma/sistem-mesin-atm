@@ -210,7 +210,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         String now, now2;
     
-        do {
+        do {  
             System.out.println("Masukkan PIN anda: ");
             now = sc.next();
             System.out.println("Masukkan PIN anda kembali: ");
@@ -254,18 +254,40 @@ public class Main {
     // End Menu
 
     // Fitur Tarik Tunai
+
     static void tarikTunai(String Nama, long Nominal) {
 
-        if (Nominal > jmlSaldo) {
-            System.out.println("Maaf, saldo tidak mencukupi.");
-        } else {
-            jmlSaldo -= Nominal;
-            updateSaldo(Nama, jmlSaldo);
-            Struk(Nominal, Nama);
-
+        String namaAkun;
+        
+        //milih akun
+        System.out.println("Silakan pilih akun yang akan digunakan untuk tarik tunai:");
+        for (int i = 0; i < akunUser.length; i++) {
+            System.out.println( (i + 1) + " . " + akunUser[i][0]);
         }
-
+        namaAkun = sc.next();
+    
+        // periksa saldo
+        long saldoAkun = getSaldo(namaAkun);
+        if (Nominal > saldoAkun)  {
+            System.out.println("Maaf, saldo tidak mencukupi.");
+            return;
+        }
+    
+        // Hitung biaya admin
+        long biayaAdmin = 0;
+        if (Nominal > 500000) {
+            biayaAdmin = 5000;
+        }
+    
+        // Jika saldo mencukupi, maka mengurangi saldo akun tersebut.
+        updateSaldo(namaAkun, saldoAkun - Nominal - biayaAdmin, biayaAdmin);
+        Struk(Nominal, namaAkun);
+    
+        System.out.println("Biaya admin: " + biayaAdmin);
+        System.out.println("Sisa saldo anda sekarang: " + getSaldo(namaAkun));
+    
     }
+    
     // End Fitur Tarik Tunai
 
     // Fitur Informasi Saldo
@@ -363,7 +385,7 @@ public class Main {
     }
     // End Konfirmasi transaksi pengguna
 
-    static void updateSaldo(String nama, long newSaldo) {
+    static void updateSaldo(String nama, long newSaldo, long biayaAdmin) {
         for (String[] user : akunUser) {
             if (user[0].equals(nama)) {
                 user[2] = String.valueOf(newSaldo);
