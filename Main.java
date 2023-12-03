@@ -272,7 +272,7 @@ public class Main {
             System.out.println("Maaf, saldo tidak mencukupi.");
             return;
         }
-    
+     
         // Hitung biaya admin
         long biayaAdmin = 0;
         if (Nominal > 500000) {
@@ -280,7 +280,7 @@ public class Main {
         }
     
         // Jika saldo mencukupi, maka mengurangi saldo akun tersebut.
-        updateSaldo(namaAkun, saldoAkun - Nominal - biayaAdmin, biayaAdmin);
+        updateSaldo(namaAkun, saldoAkun - Nominal , biayaAdmin);
         Struk(Nominal, namaAkun);
     
         System.out.println("Biaya admin: " + biayaAdmin);
