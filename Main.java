@@ -4,16 +4,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Main {
-    static String[][] akunUser = {
-            { "Diana", "12345678", "150000000" },
-            { "Varizky", "87654321", "200000000" },
-            { "Romy", "12341234", "100000000" }
-    };
-    static String[] nama =  {"Diana", "Varizky", "Romy"};
-    static int[] pin ={123456, 654321, 111222};
+    // static String[][] akunUser = {
+    //         { "Diana", "12345678", "150000000" },
+    //         { "Varizky", "87654321", "200000000" },
+    //         { "Romy", "12341234", "100000000" }
+    // };
+    static String[] namaUser =  {"Diana", "Varizky", "Romy"};
+    static int[] pinUser ={1234, 6543, 1122};
     static long[] saldo = {10000000, 12000000, 5000000};
     static Scanner sc = new Scanner(System.in);
-    static String konfirmasi, Struk, Menu;
+    static String konfirmasi, Struk, Menu, sedangLogin;
+
     static long jmlSaldo = 150000000, Nominal;
 
     public static void main(String[] args) {
@@ -34,27 +35,27 @@ public class Main {
         System.out.println("2. Tidak");
         String konfirmasi = sc.next();
         // Login
-        if (konfirmasi.equals("1")) {
-            boolean loginBerhasil = false;
-            do {
-                loginBerhasil = login();
-            } while (!loginBerhasil);
+        // if (konfirmasi.equals("1")) {
+        //     boolean loginBerhasil = false;
+        //     do {
+        //         loginBerhasil = login();
+        //     } while (!loginBerhasil);
          
-        // Registrasi   
-        } else if (konfirmasi.equals("2")){
-            System.out.print("Masukkan Nama Anda : ");
-            Nama = sc.next();
+        // // Registrasi   
+        // } else if (konfirmasi.equals("2")){
+        //     System.out.print("Masukkan Nama Anda : ");
+        //     Nama = sc.next();
 
-            System.out.print("Masukkan Asal Anda : ");
-            Asal = sc.next();
+        //     System.out.print("Masukkan Asal Anda : ");
+        //     Asal = sc.next();
 
-            System.out.print("Masukkan Profesi Anda : ");
-            Profesi = sc.next();
+        //     System.out.print("Masukkan Profesi Anda : ");
+        //     Profesi = sc.next();
 
-            registrasi(Nama, Asal, Profesi);
-        } 
-        
-        switch (menu()) {
+        //     registrasi(Nama, Asal, Profesi);
+        // } 
+        if(login()) {
+            switch (tampilanMenu()) {
                 // Tarik Tunai
                 case "1":
 
@@ -64,7 +65,7 @@ public class Main {
                         System.out.println("Masukkan Nominal yang ingin Anda tarik ");
                         Nominal = sc.nextLong();
 
-                        tarikTunai(Nama, Nominal);
+                        tarikTunai(Nominal);
                         break;
 
                     // Informasi Saldo
@@ -176,7 +177,20 @@ public class Main {
                     default:
                         System.out.println("Menu tidak tersedia ");
                 }
+            } else {
+                 System.out.print("Masukkan Nama Anda : ");
+            Nama = sc.next();
+
+            System.out.print("Masukkan Asal Anda : ");
+            Asal = sc.next();
+
+            System.out.print("Masukkan Profesi Anda : ");
+            Profesi = sc.next();
+
+            registrasi(Nama, Asal, Profesi);
             }
+        }
+        
 
            
         
@@ -188,19 +202,20 @@ public class Main {
         System.out.print("Masukkan nama : ");
         String nama = sc.next();
         System.out.print("Masukkan PIN  : ");
-        String pinUser = sc.next();
-        boolean status = cek(nama, pinUser);
+        String pin = sc.next();
+        boolean status = cek(nama);
         if (status) {
             System.out.println("Login berhasil! Selamat datang, " + nama + "!");
+            sedangLogin = nama;
             return true; 
         } else {
             System.out.println("Login gagal. Nama atau PIN  salah.");
             return false;
         }
     }
-    static boolean cek(String nama, String pinUser) {
-        for (int i = 0; i < akunUser.length; i++) {
-            if (akunUser[i][0].equals(nama) && akunUser[i][1].equals(pinUser)) {
+    static boolean cek(String nama) {
+        for (int i = 0; i < namaUser.length; i++) {
+            if (namaUser[i].equals(nama)) {
                 return true; 
             }
         }
@@ -237,7 +252,7 @@ public class Main {
     // End Registrasi User
 
     // Menu
-    static String menu() { 
+    static String tampilanMenu() { 
         System.out.println("\n");
         System.out.println("*********************************");
         System.out.println("*             MENU              *");
@@ -257,39 +272,46 @@ public class Main {
     }
     // End Menu
 
+//pengecekan
+// Fungsi untuk mencari indeks akun berdasarkan nama pengguna
+    static int identifikasiUser(String nama) {
+        for (int i = 0; i < namaUser.length; i++) {
+        if (namaUser[i].equals(nama)) {
+            return i; // Mengembalikan indeks user jika ditemukan
+        }
+    }
+    return -1; // Mengembalikan -1 jika user tidak ditemukan
+}
+
+//selesai Pengecekan
     // Fitur Tarik Tunai
 
-    static void tarikTunai(String Nama, long Nominal) {
-
-        String namaAkun;
-        
-        //milih akun
-        System.out.println("Silakan pilih akun yang akan digunakan untuk tarik tunai:");
-        for (int i = 0; i < akunUser.length; i++) {
-            System.out.println( (i + 1) + " . " + akunUser[i][0]);
+    static void tarikTunai(long Nominal) {
+        // Temukan indeks akun yang sedang login
+        int index = identifikasiUser(sedangLogin);
+    
+        // Periksa apakah akun ditemukan
+        if (index != -1) {
+            // Periksa saldo sebelum melakukan penarikan
+            long saldoAkun = saldo[index];
+            if (Nominal <= saldoAkun) {
+                // Hitung biaya admin
+                long biayaAdmin = (Nominal >= 500000) ? 5000 : 0;
+    
+                // Lakukan penarikan dan kurangi saldo
+                saldo[index] -= (Nominal + biayaAdmin);
+    
+                // Tampilkan informasi hasil penarikan
+                System.out.println("Penarikan tunai berhasil.");
+                System.out.println("Jumlah penarikan: Rp" + Nominal);
+                System.out.println("Biaya admin: Rp" + biayaAdmin);
+                System.out.println("Sisa saldo anda: Rp" + saldo[index]);
+            } else {
+                System.out.println("Saldo tidak mencukupi untuk penarikan tersebut.");
+            }
+        } else {
+            System.out.println("Akun tidak ditemukan.");
         }
-        namaAkun = sc.next();
-    
-        // periksa saldo
-        long saldoAkun = getSaldo(namaAkun);
-        if (Nominal > saldoAkun)  {
-            System.out.println("Maaf, saldo tidak mencukupi.");
-            return;
-        }
-     
-        // Hitung biaya admin
-        long biayaAdmin = 0;
-        if (Nominal > 500000) {
-            biayaAdmin = 5000;
-        }
-    
-        // Jika saldo mencukupi, maka mengurangi saldo akun tersebut.
-        updateSaldo(namaAkun, saldoAkun - Nominal , biayaAdmin);
-        Struk(Nominal, namaAkun);
-    
-        System.out.println("Biaya admin: " + biayaAdmin);
-        System.out.println("Sisa saldo anda sekarang: " + getSaldo(namaAkun));
-    
     }
     
     // End Fitur Tarik Tunai
@@ -320,7 +342,6 @@ public class Main {
                 System.out.print("Masukkan Jumlah bayar anda : ");
                 jumlahBayar = sc.nextLong();
                 konfirmasiPembayaran();
-                struk();
                 break;
 
             case "2":
@@ -366,12 +387,12 @@ public class Main {
     // Fitur Setor Tunai
     static void setorTunai() {
         long setor;
-        int index=1;
+        int i=0;
         System.out.print("Masukkan nominal yang ingin anda setorkan : ");
         setor = sc.nextLong();
         if (setor > 0) {
-            akunUser[0][2] += setor;
-            System.out.println("Setor Tunai telah berhasil. Saldo anda saat ini adalah Rp. "+ akunUser[0][2]);
+            saldo[i] += setor;
+            System.out.println("Setor Tunai telah berhasil. Saldo anda saat ini adalah Rp. "+ saldo[i]);
         } else {
             System.out.println("Maaf, setor tunai gagal. Silahkan coba lagi");
         }
@@ -399,34 +420,34 @@ public class Main {
     }
     // End Konfirmasi transaksi pengguna
 
-    static void updateSaldo(String nama, long newSaldo, long biayaAdmin) {
-        for (String[] user : akunUser) {
-            if (user[0].equals(nama)) {
-                user[2] = String.valueOf(newSaldo);
-                break;
-            }
-        }
-    }
+    // static void updateSaldo(String nama, long newSaldo, long biayaAdmin) {
+    //     for (String[] user : akunUser) {
+    //         if (user[0].equals(nama)) {
+    //             user[2] = String.valueOf(newSaldo);
+    //             break;
+    //         }
+    //     }
+    // }
 
-    static long getSaldo(String nama) {
-        for (String[] user : akunUser) {
-            if (user[0].equals(nama)) {
-                return Long.parseLong(user[2]);
-            }
-        }
-        return 0;
-    }
+    // static long getSaldo(String nama) {
+    //     for (String[] user : akunUser) {
+    //         if (user[0].equals(nama)) {
+    //             return Long.parseLong(user[2]);
+    //         }
+    //     }
+    //     return 0;
+    // }
 
     // Cetak Struk
-    static void Struk(long Nominal, String Nama) {
-        if (Struk.equals("1")) {
-            System.out.println("Silahkan ambil uang senilai " + Nominal + " dan struk anda.");
-            System.out.println("Sisa saldo anda sekarang: " + getSaldo(Nama));
-        } else {
-            System.out.println("Silahkan ambil uang Anda senilai " + Nominal);
-            System.out.println("Sisa saldo anda sekarang: " + getSaldo(Nama));
-        }
-    }
+    // static void Struk(long Nominal, String Nama) {
+    //     if (Struk.equals("1")) {
+    //         System.out.println("Silahkan ambil uang senilai " + Nominal + " dan struk anda.");
+    //         System.out.println("Sisa saldo anda sekarang: " + getSaldo(Nama));
+    //     } else {
+    //         System.out.println("Silahkan ambil uang Anda senilai " + Nominal);
+    //         System.out.println("Sisa saldo anda sekarang: " + getSaldo(Nama));
+    //     }
+    // }
     // End Cetak Struk
 
 
