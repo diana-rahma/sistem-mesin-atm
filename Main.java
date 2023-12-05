@@ -1,5 +1,7 @@
 import java.util.Scanner;
 import java.util.Arrays;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Main {
     static String[][] akunUser = {
@@ -7,6 +9,9 @@ public class Main {
             { "Varizky", "87654321", "200000000" },
             { "Romy", "12341234", "100000000" }
     };
+    static String[] nama =  {"Diana", "Varizky", "Romy"};
+    static int[] pin ={123456, 654321, 111222};
+    static long[] saldo = {10000000, 12000000, 5000000};
     static Scanner sc = new Scanner(System.in);
     static String konfirmasi, Struk, Menu;
     static long jmlSaldo = 150000000, Nominal;
@@ -98,7 +103,7 @@ public class Main {
 
                     // Setor Tunai
                     case "5":
-                        
+                        setorTunai();
                         break;
 
                     // Transfer
@@ -184,7 +189,7 @@ public class Main {
         String nama = sc.next();
         System.out.print("Masukkan PIN  : ");
         String pinUser = sc.next();
-        boolean status = login(nama, pinUser);
+        boolean status = cek(nama, pinUser);
         if (status) {
             System.out.println("Login berhasil! Selamat datang, " + nama + "!");
             return true; 
@@ -193,8 +198,7 @@ public class Main {
             return false;
         }
     }
-
-    static boolean login(String nama, String pinUser) {
+    static boolean cek(String nama, String pinUser) {
         for (int i = 0; i < akunUser.length; i++) {
             if (akunUser[i][0].equals(nama) && akunUser[i][1].equals(pinUser)) {
                 return true; 
@@ -316,6 +320,7 @@ public class Main {
                 System.out.print("Masukkan Jumlah bayar anda : ");
                 jumlahBayar = sc.nextLong();
                 konfirmasiPembayaran();
+                struk();
                 break;
 
             case "2":
@@ -360,7 +365,16 @@ public class Main {
 
     // Fitur Setor Tunai
     static void setorTunai() {
-        
+        long setor;
+        int index=1;
+        System.out.print("Masukkan nominal yang ingin anda setorkan : ");
+        setor = sc.nextLong();
+        if (setor > 0) {
+            akunUser[0][2] += setor;
+            System.out.println("Setor Tunai telah berhasil. Saldo anda saat ini adalah Rp. "+ akunUser[0][2]);
+        } else {
+            System.out.println("Maaf, setor tunai gagal. Silahkan coba lagi");
+        }
     }
     // End fitur Setor Tunai
 
@@ -414,4 +428,17 @@ public class Main {
         }
     }
     // End Cetak Struk
+
+
+    // static void struk() {
+    //     Date tanggalSekarang = new Date();
+    //     SimpleDateFormat formatTanggal = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    //     String tanggal = formatTanggal.format(tanggalSekarang);
+    //     System.out.println("==========STRUK TRANSAKSI==========");
+    //     System.out.println("Tanggal/Waktu   : "+tanggal);
+    //     System.out.println("Jenis Transaksi : ");
+    //     System.out.println("Sisa saldo      : ");
+    //     System.out.println("");
+    // }
+
 }
