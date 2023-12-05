@@ -11,7 +11,7 @@ public class Main {
     // };
     static String[] namaUser =  {"Diana", "Varizky", "Romy"};
     static int[] pinUser ={1234, 6543, 1122};
-    static long[] saldo = {10000000, 12000000, 5000000};
+    static long[] saldo = {1000000, 2000000, 3000000};
     static Scanner sc = new Scanner(System.in);
     static String konfirmasi, Struk, Menu, sedangLogin;
 
@@ -59,8 +59,6 @@ public class Main {
                 // Tarik Tunai
                 case "1":
 
-                        System.out.println("Masukkan Nama anda");
-                        Nama = sc.next();
 
                         System.out.println("Masukkan Nominal yang ingin Anda tarik ");
                         Nominal = sc.nextLong();
@@ -178,7 +176,9 @@ public class Main {
                         System.out.println("Menu tidak tersedia ");
                 }
             } else {
-                 System.out.print("Masukkan Nama Anda : ");
+            System.out.println("Anda Belum punya akun?");
+            System.out.println("Silahkan Registrasi terlebih dahulu :V");
+            System.out.print("Masukkan Nama Anda : ");
             Nama = sc.next();
 
             System.out.print("Masukkan Asal Anda : ");
@@ -272,7 +272,6 @@ public class Main {
     }
     // End Menu
 
-//pengecekan
 // Fungsi untuk mencari indeks akun berdasarkan nama pengguna
     static int identifikasiUser(String nama) {
         for (int i = 0; i < namaUser.length; i++) {
@@ -284,6 +283,7 @@ public class Main {
 }
 
 //selesai Pengecekan
+
     // Fitur Tarik Tunai
 
     static void tarikTunai(long Nominal) {
