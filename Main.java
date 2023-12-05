@@ -324,56 +324,68 @@ public class Main {
 
     // Fitur Pembayaran
     static void pembayaran() {
-        String jenisBayar, jenisRek;
+        int index = identifikasiUser(sedangLogin);
+        String jenisBayar;
         int kodeBayar, noCust;
         long jumlahBayar, tagihan;
-        System.out.println("Silahkan pilih jenis pembayaran / pembelian di bawah ini");
-        System.out.println("1. Token Listrik ");
-        System.out.println("2. Tagihan Air PDAM");
-        System.out.println("3. Pajak");
-        System.out.println("4. Online Shop");
-        jenisBayar = sc.next();
+        long saldoAkun = saldo[index];
+        if ( index != -1) {
+            System.out.println("Silahkan pilih jenis pembayaran / pembelian di bawah ini");
+            System.out.println("1. Token Listrik ");
+            System.out.println("2. Tagihan Air PDAM");
+            System.out.println("3. Pajak");
+            System.out.println("4. Online Shop");
+            jenisBayar = sc.next();
+            
+            switch (jenisBayar) {
+                case "1":
+                    System.out.println("<-----Bayar Token Listrik----->");
+                    System.out.print("Masukkan nomor meter : ");
+                    kodeBayar = sc.nextInt();
+                    System.out.print("Masukkan Jumlah bayar anda : ");
+                    jumlahBayar = sc.nextLong();
+                    saldo[index] -= jumlahBayar;
+                    System.out.println("Sisa saldo anda saat ini Rp."+saldo[index]);
+                    konfirmasiPembayaran();
+                    break;
 
-        switch (jenisBayar) {
-            case "1":
-                System.out.println("<-----Bayar Token Listrik----->");
-                System.out.print("Masukkan nomor meter : ");
-                kodeBayar = sc.nextInt();
-                System.out.print("Masukkan Jumlah bayar anda : ");
-                jumlahBayar = sc.nextLong();
-                konfirmasiPembayaran();
-                break;
+                case "2":
+                    System.out.println("-----Bayar Tagihan Air PDAM----");
+                    System.out.print("Masukkan kode PDAM : ");
+                    kodeBayar = sc.nextInt();
+                    System.out.print("Masukkan kode pelanggan : ");
+                    noCust = sc.nextInt();
+                    System.out.print("Masukkan jumlah tagihan yang akan dibayar");
+                    tagihan = sc.nextLong();
+                    saldo[index] -= tagihan;
+                    System.out.println("Sisa saldo anda saat ini Rp."+saldo[index]);
+                    konfirmasiPembayaran();
+                    break;
 
-            case "2":
-                System.out.println("-----Bayar Tagihan Air PDAM----");
-                System.out.print("Masukkan kode PDAM : ");
-                kodeBayar = sc.nextInt();
-                System.out.print("Masukkan kode pelanggan : ");
-                noCust = sc.nextInt();
-                System.out.print("Masukkan jumlah tagihan yang akan dibayar");
-                tagihan = sc.nextLong();
-                konfirmasiPembayaran();
-                break;
+                case "3":
+                    System.out.println("-----Bayar Pajak-----");
+                    System.out.print("Masukkan kode tagihan : ");
+                    kodeBayar = sc.nextInt();
+                    System.out.print("Masukkan jumlah tagihan pajak : ");
+                    tagihan = sc.nextLong();
+                    saldo[index] -= tagihan;
+                    System.out.println("Sisa saldo anda saat ini Rp."+saldo[index]);
+                    konfirmasiPembayaran();
+                    break;
 
-            case "3":
-                System.out.println("-----Bayar Pajak-----");
-                System.out.print("Masukkan kode tagihan : ");
-                kodeBayar = sc.nextInt();
-                System.out.println("Masukkan jumlah tagihan pajak : ");
-                tagihan = sc.nextLong();
-                konfirmasiPembayaran();
-                break;
-
-            case "4":
-                System.out.println("-----Bayar Online Shop-----");
-                System.out.print("Masukkan kode bayar : ");
-                kodeBayar = sc.nextInt();
-                System.out.print("Masukkan nominal pembayaran yang harus dibayar : ");
-                jumlahBayar = sc.nextLong();
-                konfirmasiPembayaran();
-                break;
-            default:
-            System.out.println("Jenis pembayaran tidak tersedia");
+                case "4":
+                    System.out.println("-----Bayar Online Shop-----");
+                    System.out.print("Masukkan kode bayar : ");
+                    kodeBayar = sc.nextInt();
+                    System.out.print("Masukkan nominal pembayaran yang harus dibayar : ");
+                    jumlahBayar = sc.nextLong();
+                    saldo[index] -= jumlahBayar;
+                    System.out.println("Sisa saldo anda saat ini Rp."+saldo[index]);
+                    konfirmasiPembayaran();
+                    break;
+                default:
+                System.out.println("Jenis pembayaran tidak tersedia");
+            }
         }
     }   
     // End fitur pembayaran.
@@ -386,15 +398,17 @@ public class Main {
 
     // Fitur Setor Tunai
     static void setorTunai() {
-        long setor;
-        int i=0;
-        System.out.print("Masukkan nominal yang ingin anda setorkan : ");
-        setor = sc.nextLong();
-        if (setor > 0) {
-            saldo[i] += setor;
-            System.out.println("Setor Tunai telah berhasil. Saldo anda saat ini adalah Rp. "+ saldo[i]);
+        int index = identifikasiUser(sedangLogin);
+        if (index != -1) {
+            System.out.print("Masukkan nominal yang ingin anda setorkan : ");
+            Nominal = sc.nextLong();
+            long setor = saldo[index];
+            if (Nominal > 0) {
+                saldo[index] += Nominal;
+                System.out.println("Setor tunai senilai Rp. "+ Nominal+ " telah berhasil. Sisa saldo anda sekarang Rp. " + saldo[index]);
+            }
         } else {
-            System.out.println("Maaf, setor tunai gagal. Silahkan coba lagi");
+            System.out.println("Tarik tunai gagal.");
         }
     }
     // End fitur Setor Tunai
