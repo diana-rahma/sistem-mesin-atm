@@ -68,7 +68,7 @@ public class Main {
 
                     // Informasi Saldo
                     case "2":
-                        System.out.println("Saldo anda tersisa : ");
+                        informasiSaldo();
                         break;
 
                     // Pembayaran
@@ -317,8 +317,11 @@ public class Main {
     // End Fitur Tarik Tunai
 
     // Fitur Informasi Saldo
-    static void InformasiSaldo() {
-
+    static void informasiSaldo() {
+        for (int i = 0; i < akunUser.length; i++) {
+            System.out.println("Nama: " + akunUser[i][0]);
+            System.out.println("Saldo: " + akunUser[i][2]);
+        }
     }
     // End Fitur Informasi Saldo
 
