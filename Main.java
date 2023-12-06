@@ -51,7 +51,7 @@ public class Main {
 
                     // Informasi Saldo
                     case "2":
-                        // informasiSaldo();
+                        informasiSaldo();
                         break;
 
                     // Pembayaran
@@ -302,12 +302,16 @@ public class Main {
     // End Fitur Tarik Tunai
 
     // Fitur Informasi Saldo
-    // static void informasiSaldo() {
-    //     for (int i = 0; i < akunUser.length; i++) {
-    //         System.out.println("Nama: " + akunUser[i][0]);
-    //         System.out.println("Saldo: " + akunUser[i][2]);
-    //     }
-    // }
+    static void informasiSaldo() {
+        int index = identifikasiUser(sedangLogin);
+        if (index != -1) {
+            System.out.println("Informasi Saldo");
+            System.out.println("Nama: " + namaUser[index]);
+            System.out.println("Saldo: Rp" + saldo[index]);
+        } else {
+            System.out.println("Akun tidak ditemukan.");
+        }
+    }
     // End Fitur Informasi Saldo
 
     // Fitur Pembayaran
