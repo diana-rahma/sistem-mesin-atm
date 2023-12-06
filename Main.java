@@ -34,32 +34,15 @@ public class Main {
         System.out.println("1. Ya");
         System.out.println("2. Tidak");
         String konfirmasi = sc.next();
-        // Login
-        // if (konfirmasi.equals("1")) {
-        //     boolean loginBerhasil = false;
-        //     do {
-        //         loginBerhasil = login();
-        //     } while (!loginBerhasil);
-         
-        // // Registrasi   
-        // } else if (konfirmasi.equals("2")){
-        //     System.out.print("Masukkan Nama Anda : ");
-        //     Nama = sc.next();
-
-        //     System.out.print("Masukkan Asal Anda : ");
-        //     Asal = sc.next();
-
-        //     System.out.print("Masukkan Profesi Anda : ");
-        //     Profesi = sc.next();
-
-        //     registrasi(Nama, Asal, Profesi);
-        // } 
-        if(login()) {
+       
+        if(konfirmasi.equals("1")) {
+            boolean loginBerhasil = false;
+            do {
+                loginBerhasil = login();
+            } while(!loginBerhasil);
             switch (tampilanMenu()) {
                 // Tarik Tunai
                 case "1":
-
-
                         System.out.println("Masukkan Nominal yang ingin Anda tarik ");
                         Nominal = sc.nextLong();
 
@@ -68,7 +51,7 @@ public class Main {
 
                     // Informasi Saldo
                     case "2":
-                        informasiSaldo();
+                        // informasiSaldo();
                         break;
 
                     // Pembayaran
@@ -172,22 +155,26 @@ public class Main {
 
                         } while (Now != Now2);
 
+                    case "0" :
+                        break;
                     default:
                         System.out.println("Menu tidak tersedia ");
                 }
+            } else if (konfirmasi.equals("2")) {
+                System.out.println("Anda Belum punya akun?");
+                System.out.println("Silahkan Registrasi terlebih dahulu :V");
+                System.out.print("Masukkan Nama Anda : ");
+                Nama = sc.next();
+
+                System.out.print("Masukkan Asal Anda : ");
+                Asal = sc.next();
+
+                System.out.print("Masukkan Profesi Anda : ");
+                Profesi = sc.next();
+
+                registrasi(Nama, Asal, Profesi);
             } else {
-            System.out.println("Anda Belum punya akun?");
-            System.out.println("Silahkan Registrasi terlebih dahulu :V");
-            System.out.print("Masukkan Nama Anda : ");
-            Nama = sc.next();
-
-            System.out.print("Masukkan Asal Anda : ");
-            Asal = sc.next();
-
-            System.out.print("Masukkan Profesi Anda : ");
-            Profesi = sc.next();
-
-            registrasi(Nama, Asal, Profesi);
+                System.out.println("Input invalid");
             }
         }
         
@@ -247,8 +234,6 @@ public class Main {
         System.out.println("Asal = " + Asal);
         System.out.println("Profesi = " + Profesi);
     }
-    
-
     // End Registrasi User
 
     // Menu
@@ -317,12 +302,12 @@ public class Main {
     // End Fitur Tarik Tunai
 
     // Fitur Informasi Saldo
-    static void informasiSaldo() {
-        for (int i = 0; i < akunUser.length; i++) {
-            System.out.println("Nama: " + akunUser[i][0]);
-            System.out.println("Saldo: " + akunUser[i][2]);
-        }
-    }
+    // static void informasiSaldo() {
+    //     for (int i = 0; i < akunUser.length; i++) {
+    //         System.out.println("Nama: " + akunUser[i][0]);
+    //         System.out.println("Saldo: " + akunUser[i][2]);
+    //     }
+    // }
     // End Fitur Informasi Saldo
 
     // Fitur Pembayaran
@@ -358,7 +343,7 @@ public class Main {
                     kodeBayar = sc.nextInt();
                     System.out.print("Masukkan kode pelanggan : ");
                     noCust = sc.nextInt();
-                    System.out.print("Masukkan jumlah tagihan yang akan dibayar");
+                    System.out.print("Masukkan jumlah tagihan yang akan dibayar : ");
                     tagihan = sc.nextLong();
                     saldo[index] -= tagihan;
                     System.out.println("Sisa saldo anda saat ini Rp."+saldo[index]);
@@ -469,14 +454,14 @@ public class Main {
 
 
     // static void struk() {
+    //     int index = identifikasiUser(sedangLogin);
     //     Date tanggalSekarang = new Date();
     //     SimpleDateFormat formatTanggal = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     //     String tanggal = formatTanggal.format(tanggalSekarang);
     //     System.out.println("==========STRUK TRANSAKSI==========");
     //     System.out.println("Tanggal/Waktu   : "+tanggal);
     //     System.out.println("Jenis Transaksi : ");
-    //     System.out.println("Sisa saldo      : ");
+    //     System.out.println("Sisa saldo      : "+saldo[index]);
     //     System.out.println("");
     // }
-
 }
