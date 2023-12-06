@@ -161,9 +161,9 @@ public class Main {
                         System.out.println("Menu tidak tersedia ");
                 }
             } else if (konfirmasi.equals("2")) {
-                System.out.println("Anda Belum punya akun?");
-                System.out.println("Silahkan Registrasi terlebih dahulu :V");
-                System.out.print("Masukkan Nama Anda : ");
+                System.out.println("\nAnda Belum punya akun?");
+                System.out.println("Silahkan Registrasi terlebih dahulu ");
+                System.out.print("\nMasukkan Nama Anda : ");
                 Nama = sc.next();
 
                 System.out.print("Masukkan Asal Anda : ");
@@ -174,7 +174,7 @@ public class Main {
 
                 registrasi(Nama, Asal, Profesi);
             } else {
-                System.out.println("Input invalid");
+                System.out.println(" invalid Input ");
             }
         }
         
@@ -222,12 +222,12 @@ public class Main {
             System.out.println("Masukkan PIN anda kembali: ");
             now2 = sc.next();
     
-            if (now.equals(now2)) {
+            if (now.equalsIgnoreCase(now2)) {
                 break;
             } else {
                 System.out.println("Pin tidak sama");
             }
-        } while (true);
+        } while (now != now2);
     
         System.out.println("Selamat! Akun Anda telah terdaftar");
         System.out.println("Nama = " + Nama);
