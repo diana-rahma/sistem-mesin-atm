@@ -18,145 +18,112 @@ public class Main {
     static boolean selesaiTransaksi = false;
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+            Scanner sc = new Scanner(System.in);
 
-        int pilihan, kodeBayar, kodeInstitusi, noRek, kodeBank, bankTujuan;
-        long Nominal, sisa, jumlahBayar, tagihan, nominalTransfer;
-        String Menu, Nama, Struk, Asal, Profesi, jenisBayar, jenisRek, Now, Now2, Past, New, New2;
+            int pilihan, kodeBayar, kodeInstitusi, noRek, kodeBank, bankTujuan;
+            long Nominal, sisa, jumlahBayar, tagihan, nominalTransfer;
+            String Menu, Nama, Struk, Asal, Profesi, jenisBayar, jenisRek, Now, Now2, Past, New, New2;
 
-        System.out.println("*********************************************");
-        System.out.println("*             SISTEM MESIN ATM              *");
-        System.out.println("*********************************************");
+            System.out.println("*********************************************");
+            System.out.println("*             SISTEM MESIN ATM              *");
+            System.out.println("*********************************************");
 
-        // Apakah pengguna memiliki akun atau tidak
-        System.out.println("Semua Pilihan hanya menggunakan angka !");
-        System.out.println("Apakah anda memiliki akun? ");
-        System.out.println("1. Ya");
-        System.out.println("2. Tidak");
-        String konfirmasi = sc.next();
+            // Apakah pengguna memiliki akun atau tidak
+            System.out.println("Semua Pilihan hanya menggunakan angka !");
+            System.out.println("Apakah anda memiliki akun? ");
+            System.out.println("1. Ya");
+            System.out.println("2. Tidak");
+            String konfirmasi = sc.next();
 
-        if (konfirmasi.equals("1")) {
-            boolean loginBerhasil = false;
-            do {
-                loginBerhasil = login();
-            } while (!loginBerhasil);
-            switch (tampilanMenu()) {
-                // Tarik Tunai
-                case "1":
-                    System.out.println("Masukkan Nominal yang ingin Anda tarik ");
-                    Nominal = sc.nextLong();
+            if (konfirmasi.equals("1")) {
+                boolean loginBerhasil = false;
+                do {
+                    loginBerhasil = login();
+                } while (!loginBerhasil);
+                switch (tampilanMenu()) {
+                    // Tarik Tunai
+                    case "1":
+                        System.out.println("Masukkan Nominal yang ingin Anda tarik ");
+                        Nominal = sc.nextLong();
 
-                    tarikTunai(Nominal);
-                    break;
-
-                // Informasi Saldo
-                case "2":
-                    informasiSaldo();
-                    break;
-
-                // Pembayaran
-                case "3":
-                    pembayaran();
-                    break;
-
-                // mengganti PIN yang lama dengan yang baru.
-                case "4":
-                    ubahPIN();
-
-
-                // Setor Tunai
-                case "5":
-                    setorTunai();
-                    break;
-
-                // Transfer
-                case "6":
-                    System.out.println("Masukkan kode bank anda");
-                    kodeBank = sc.nextInt();
-                    System.out.println("Masukkan kode bank tujuan anda: ");
-                    bankTujuan = sc.nextInt();
-                    System.out.println("Masukkan nominal transfer anda");
-                    nominalTransfer = sc.nextLong();
-
-                    for (int i = 1; i <= 2; i++) {
-                        for (int j = 1; j <= 2; j++) {
-                            if (i == 1 && j == 1) {
-                                if (kodeBank == bankTujuan) {
-                                    if (nominalTransfer >= 500000) {
-                                        System.out.println("Bebas biaya admin");
-                                    } else {
-                                        System.out.println("Anda dikenakan biaya admin sebesar 5000");
-                                    }
-                                }
-                            } else if (i == 1 && j == 2) {
-                                if (bankTujuan == kodeBank) {
-                                    System.out.println("Biaya admin sebesar 10000");
-                                }
-                            } else if (i == 2 && j == 2) {
-                                System.out.println("Biaya admin 15000");
-                            }
-                        }
-                    }
-                    System.out.println();
-                    break;
-
-                // Registrasi
-                case "7":
-                    System.out.println("Silakan Registrasi terlebih dahulu.");
-
-                    System.out.println("Masukkan Nama Anda : ");
-                    Nama = sc.next();
-
-                    while (true) {
-
-                        System.out.println("Darimana Anda Berasal : ");
-                        Asal = sc.next();
-
-                        System.out.println("Apa Profesi Anda : ");
-                        Profesi = sc.next();
+                        tarikTunai(Nominal);
 
                         break;
-                    }
 
-                    do {
-                        System.out.println("Masukkan PIN anda : ");
-                        Now = sc.next();
+                    // Informasi Saldo
+                    case "2":
+                        informasiSaldo();
+                        break;
 
-                        System.out.println("Masukkan PIN anda kembali : ");
-                        Now2 = sc.next();
+                    // Pembayaran
+                    case "3":
+                        pembayaran();
+                        break;
 
-                        if (Now == Now2) {
-                            System.out.println("Selamat !! Akun anda telah terdaftar");
-                            System.out.println("Nama = " + Nama);
-                            System.out.println("Asal = " + Asal);
-                            System.out.println("Profesi = " + Profesi);
-                        } else {
-                            System.out.println("PIN anda tidak sama ");
+                    // mengganti PIN yang lama dengan yang baru.
+                    case "4":
+                        ubahPIN();
+
+                        // Setor Tunai
+                    case "5":
+                        setorTunai();
+                        break;
+
+                    // Transfer
+                    case "6":
+                        System.out.println("Masukkan kode bank anda");
+                        kodeBank = sc.nextInt();
+                        System.out.println("Masukkan kode bank tujuan anda: ");
+                        bankTujuan = sc.nextInt();
+                        System.out.println("Masukkan nominal transfer anda");
+                        nominalTransfer = sc.nextLong();
+
+                        for (int i = 1; i <= 2; i++) {
+                            for (int j = 1; j <= 2; j++) {
+                                if (i == 1 && j == 1) {
+                                    if (kodeBank == bankTujuan) {
+                                        if (nominalTransfer >= 500000) {
+                                            System.out.println("Bebas biaya admin");
+                                        } else {
+                                            System.out.println("Anda dikenakan biaya admin sebesar 5000");
+                                        }
+                                    }
+                                } else if (i == 1 && j == 2) {
+                                    if (bankTujuan == kodeBank) {
+                                        System.out.println("Biaya admin sebesar 10000");
+                                    }
+                                } else if (i == 2 && j == 2) {
+                                    System.out.println("Biaya admin 15000");
+                                }
+                            }
                         }
+                        System.out.println();
+                        break;
 
-                    } while (Now != Now2);
+                    case "0":
+                        break;
+                    default:
+                        System.out.println("Menu tidak tersedia ");
+                }
+            }else if(konfirmasi.equals("2"))
 
-                case "0":
-                    break;
-                default:
-                    System.out.println("Menu tidak tersedia ");
-            }
-        } else if (konfirmasi.equals("2")) {
-            System.out.println("\nAnda Belum punya akun?");
-            System.out.println("Silahkan Registrasi terlebih dahulu ");
-            System.out.print("\nMasukkan Nama Anda : ");
-            Nama = sc.next();
+    {
+        System.out.println("\nAnda Belum punya akun?");
+        System.out.println("Silahkan Registrasi terlebih dahulu ");
+        System.out.print("\nMasukkan Nama Anda : ");
+        Nama = sc.next();
 
-            System.out.print("Masukkan Asal Anda : ");
-            Asal = sc.next();
+        System.out.print("Masukkan Asal Anda : ");
+        Asal = sc.next();
 
-            System.out.print("Masukkan Profesi Anda : ");
-            Profesi = sc.next();
+        System.out.print("Masukkan Profesi Anda : ");
+        Profesi = sc.next();
 
-            registrasi(Nama, Asal, Profesi);
-        } else {
-            System.out.println(" invalid Input ");
-        }
+        registrasi(Nama, Asal, Profesi);
+    }else
+    {
+        System.out.println(" invalid Input ");
+    }
     }
 
     // FUNGSI FUNGSI AN
@@ -267,12 +234,16 @@ public class Main {
                 System.out.println("Jumlah penarikan: Rp" + Nominal);
                 System.out.println("Biaya admin: Rp" + biayaAdmin);
                 System.out.println("Sisa saldo anda: Rp" + saldo[index]);
+
+                cetakStruk(Nominal, saldo[index]);
             } else {
                 System.out.println("Saldo tidak mencukupi untuk penarikan tersebut.");
             }
         } else {
             System.out.println("Akun tidak ditemukan.");
         }
+
+        System.out.println("Apakah anda ingin mencetak struk sebagai");
     }
 
     // End Fitur Tarik Tunai
@@ -377,6 +348,7 @@ public class Main {
                 if (New == New2) {
                     pinUser[index] = New;
                     System.out.println("PIN berhasil diubah.");
+                    System.out.println("PIN anda sekarang adalah : " + New);
                 } else {
                     System.out.println("PIN baru tidak sesuai dengan konfirmasi. Silakan coba lagi.");
                 }
@@ -386,7 +358,7 @@ public class Main {
         } else {
             System.out.println("Anda Belum Login");
         }
-        
+
     }
     // End Fitur Ubah PIN
 
@@ -427,6 +399,20 @@ public class Main {
             System.out.println("Silahkan kembali ke menu utama");
         }
     }
+
+    // Struk
+
+    static void cetakStruk(long Nominal, long hasil) {
+
+        System.out.println("===== STRUK TRANSAKSI =====");
+
+        System.out.println("Nominal Transaksi: Rp " + Nominal);
+        System.out.println("Sisa Saldo: Rp " + hasil);
+        System.out.println("Terima kasih telah melakukan transaksi!");
+    }
+
+    // End Struk
+
     // End Konfirmasi transaksi pengguna
 
     // static void updateSaldo(String nama, long newSaldo, long biayaAdmin) {
