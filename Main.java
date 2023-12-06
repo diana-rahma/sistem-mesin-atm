@@ -41,13 +41,10 @@ public class Main {
                     loginBerhasil = login();
                 } while (!loginBerhasil);
                 switch (tampilanMenu()) {
+                    
                     // Tarik Tunai
                     case "1":
-                        System.out.println("Masukkan Nominal yang ingin Anda tarik ");
-                        Nominal = sc.nextLong();
-
-                        tarikTunai(Nominal);
-
+                        tarikTunai();
                         break;
 
                     // Informasi Saldo
@@ -105,25 +102,22 @@ public class Main {
                     default:
                         System.out.println("Menu tidak tersedia ");
                 }
-            }else if(konfirmasi.equals("2"))
+            } else if (konfirmasi.equals("2")) {
+                System.out.println("\nAnda Belum punya akun?");
+                System.out.println("Silahkan Registrasi terlebih dahulu ");
+                System.out.print("\nMasukkan Nama Anda : ");
+                    Nama = sc.next();
 
-    {
-        System.out.println("\nAnda Belum punya akun?");
-        System.out.println("Silahkan Registrasi terlebih dahulu ");
-        System.out.print("\nMasukkan Nama Anda : ");
-        Nama = sc.next();
+                System.out.print("Masukkan Asal Anda : ");
+                    Asal = sc.next();
 
-        System.out.print("Masukkan Asal Anda : ");
-        Asal = sc.next();
+                System.out.print("Masukkan Profesi Anda : ");
+                    Profesi = sc.next();
 
-        System.out.print("Masukkan Profesi Anda : ");
-        Profesi = sc.next();
-
-        registrasi(Nama, Asal, Profesi);
-    }else
-    {
-        System.out.println(" invalid Input ");
-    }
+                registrasi(Nama, Asal, Profesi);
+            } else {
+                System.out.println(" invalid Input ");
+        }
     }
 
     // FUNGSI FUNGSI AN
@@ -206,24 +200,27 @@ public class Main {
     static int identifikasiUser(String nama) {
         for (int i = 0; i < namaUser.length; i++) {
             if (namaUser[i].equals(nama)) {
-                return i; // Mengembalikan indeks user jika ditemukan
+                return i;
             }
         }
-        return -1; // Mengembalikan -1 jika user tidak ditemukan
+        return -1; 
     }
 
     // selesai Pengecekan
 
     // Fitur Tarik Tunai
 
-    static void tarikTunai(long Nominal) {
-        // Temukan indeks akun yang sedang login
+    static void tarikTunai() {
+
         int index = identifikasiUser(sedangLogin);
 
-        // Periksa apakah akun ditemukan
         if (index != -1) {
+
+            System.out.println("Masukkan Nominal yang ingin Anda tarik ");
+            Nominal = sc.nextLong();
             // Periksa saldo sebelum melakukan penarikan
             long saldoAkun = saldo[index];
+            
             if (Nominal <= saldoAkun) {
 
                 long biayaAdmin = (Nominal >= 500000) ? 5000 : 0;
