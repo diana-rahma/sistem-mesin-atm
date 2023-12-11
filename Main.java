@@ -187,7 +187,6 @@ public class Main {
         System.out.println("\t * 4. Ubah PIN ");
         System.out.println("\t * 5. Setor Tunai ");
         System.out.println("\t * 6. Transfer ");
-        System.out.println("\t * 7. Registrasi ");
         System.out.println("\t * 0. Keluar ");
         System.out.println("Silahkan Pilih salah satu menu di atas! ");
         sc.nextLine();
