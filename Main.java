@@ -1,7 +1,5 @@
 import java.util.Scanner;
 import java.util.Arrays;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Main {
     // static String[][] akunUser = {
@@ -60,6 +58,7 @@ public class Main {
                 // mengganti PIN yang lama dengan yang baru.
                 case "4":
                     ubahPIN();
+                    break;
 
                     // Setor Tunai
                 case "5":
@@ -199,9 +198,6 @@ public class Main {
                 saldo[index] -= (Nominal + biayaAdmin);
 
                 System.out.println("Penarikan tunai berhasil.");
-                System.out.println("Jumlah penarikan: Rp" + Nominal);
-                System.out.println("Biaya admin: Rp" + biayaAdmin);
-                System.out.println("Sisa saldo anda: Rp" + saldo[index]);
 
                 cetakStruk(Nominal, saldo[index]);
             } else {
@@ -210,8 +206,6 @@ public class Main {
         } else {
             System.out.println("Akun tidak ditemukan.");
         }
-
-        System.out.println("Apakah anda ingin mencetak struk sebagai");
     }
     // End Fitur Tarik Tunai
 
@@ -352,9 +346,6 @@ public class Main {
     // Fitur Setor Tunai
     static void setorTunai() {
         int index = identifikasiUser(sedangLogin);
-        Date tanggalSekarang = new Date();
-        SimpleDateFormat formatTanggal = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        String tanggal = formatTanggal.format(tanggalSekarang);
         if (index != -1) {
             System.out.print("Masukkan nominal yang ingin anda setorkan : ");
             Nominal = sc.nextLong();
@@ -363,7 +354,6 @@ public class Main {
                 saldo[index] += Nominal;
                 System.out.println("Setor tunai senilai Rp" + Nominal + " berhasil");
                 System.out.println("==========STRUK TRANSAKSI SETOR TUNAI==========");
-                System.out.println("Tanggal/Waktu     : " + tanggal);
                 System.out.println("Nominal transaksi : Rp" + Nominal);
                 System.out.println("Sisa saldo anda   : Rp" + saldo[index]);
                 System.out.println("Terima kasih telah melakukan transaksi");
@@ -453,11 +443,7 @@ public class Main {
     // Struk Pembayaran
     static void strukBayar(long jumlahBayar) {
         int index = identifikasiUser(sedangLogin);
-        Date tanggalSekarang = new Date();
-        SimpleDateFormat formatTanggal = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        String tanggal = formatTanggal.format(tanggalSekarang);
         System.out.println("==========STRUK TRANSAKSI PEMBAYARAN==========");
-        System.out.println("Tanggal/Waktu     : " + tanggal);
         System.out.println("Nominal transaksi : Rp" + jumlahBayar);
         System.out.println("Sisa saldo anda   : Rp" + saldo[index]);
         System.out.println("Terima kasih telah melakukan transaksi");
