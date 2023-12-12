@@ -68,33 +68,7 @@ public class Main {
 
                 // Transfer
                 case "6":
-                    System.out.println("Masukkan kode bank anda");
-                    kodeBank = sc.nextInt();
-                    System.out.println("Masukkan kode bank tujuan anda: ");
-                    bankTujuan = sc.nextInt();
-                    System.out.println("Masukkan nominal transfer anda");
-                    nominalTransfer = sc.nextLong();
-
-                    for (int i = 1; i <= 2; i++) {
-                        for (int j = 1; j <= 2; j++) {
-                            if (i == 1 && j == 1) {
-                                if (kodeBank == bankTujuan) {
-                                    if (nominalTransfer >= 500000) {
-                                        System.out.println("Bebas biaya admin");
-                                    } else {
-                                        System.out.println("Anda dikenakan biaya admin sebesar 5000");
-                                    }
-                                }
-                            } else if (i == 1 && j == 2) {
-                                if (bankTujuan == kodeBank) {
-                                    System.out.println("Biaya admin sebesar 10000");
-                                }
-                            } else if (i == 2 && j == 2) {
-                                System.out.println("Biaya admin 15000");
-                            }
-                        }
-                    }
-                    System.out.println();
+                    transfer();
                     break;
 
                 case "0":
@@ -243,15 +217,35 @@ public class Main {
 
     // Fitur Informasi Saldo
     static void informasiSaldo() {
-        int index = identifikasiUser(sedangLogin);
-        if (index != -1) {
-            System.out.println("Informasi Saldo");
-            System.out.println("Nama: " + namaUser[index]);
-            System.out.println("Saldo: Rp" + saldo[index]);
-        } else {
-            System.out.println("Akun tidak ditemukan.");
+    int index = identifikasiUser(sedangLogin);
+    if (index != -1) {
+        System.out.println("Informasi Saldo");
+        System.out.println("Nama: " + namaUser[index]);
+        System.out.println("Saldo: Rp" + saldo[index]);
+
+        // Option to quit or go back to the menu
+        System.out.println("\nApakah Anda ingin:");
+        System.out.println("1. Kembali ke Menu Utama");
+        System.out.println("2. Keluar");
+
+        int option = sc.nextInt();
+
+        switch (option) {
+            case 1:
+                tampilanMenu();
+                break;
+            case 2:
+                System.out.println("Terima kasih telah menggunakan layanan kami.");
+                System.exit(0);
+                break;
+            default:
+                System.out.println("Pilihan tidak valid.");
+                break;
         }
+    } else {
+        System.out.println("Akun tidak ditemukan.");
     }
+}
     // End Fitur Informasi Saldo
 
     // Fitur Pembayaran
@@ -382,9 +376,52 @@ public class Main {
     // End fitur Setor Tunai
 
     // Fitur Transfer
-    static void Transfer() {
+    static void transfer() {
+    int indexPengirim = identifikasiUser(sedangLogin);
 
+    if (indexPengirim != -1) {
+        System.out.println("Masukkan nama penerima: ");
+        String namaPenerima = sc.next();
+
+        int indexPenerima = identifikasiUser(namaPenerima);
+
+        if (indexPenerima != -1) {
+            System.out.println("Masukkan nominal yang ingin Anda transfer: ");
+            Nominal = sc.nextLong();
+
+            // Biaya admin
+            System.out.println("Apakah Anda mentransfer ke bank yang sama?");
+            System.out.println("1. Ya");
+            System.out.println("2. Tidak");
+            int transferSameBank = sc.nextInt();
+
+            if (transferSameBank == 2) {
+                System.out.println("Biaya admin: Rp20000");
+                Nominal += 20000;
+            } else {
+                if (Nominal < 500000) {
+                    System.out.println("Biaya admin: Rp10000");
+                    Nominal += 10000;
+                } else {
+                    System.out.println("Biaya admin: Gratis");
+                }
+            }
+
+            // Cek apakah saldo cukup
+            if (Nominal <= saldo[indexPengirim]) {
+                saldo[indexPengirim] -= Nominal;
+
+                System.out.println("Transfer berhasil.");
+                System.out.println("Jumlah transfer: Rp" + Nominal);
+                System.out.println("Sisa saldo Anda: Rp" + saldo[indexPengirim]);
+            } else {
+                System.out.println("Saldo tidak mencukupi untuk transfer tersebut.");
+            }
+        } else {
+            System.out.println("Penerima tidak ditemukan.");
+        }
     }
+}
     // End Fitur Transfer
 
     // Konfirmasi pembayaran pengguna
