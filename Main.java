@@ -11,9 +11,9 @@ public class Main {
     static int[] pinUser = { 1234, 6543, 1122 };
     static long[] saldo = { 1000000, 2000000, 3000000 };
     static Scanner sc = new Scanner(System.in);
-    static String konfirmasi, Struk, Menu, sedangLogin;
+    static String konfirmasi, Struk, Menu, sedangLogin, ulangMenu;
     static long jmlSaldo = 150000000, Nominal;
-    static boolean selesaiTransaksi = false;
+    static boolean selesaiTransaksi = false, lanjutTransaksi;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -38,43 +38,56 @@ public class Main {
             do {
                 loginBerhasil = login();
             } while (!loginBerhasil);
-            switch (tampilanMenu()) {
 
-                // Tarik Tunai
-                case "1":
-                    tarikTunai();
-                    break;
-
-                // Informasi Saldo
-                case "2":
-                    informasiSaldo();
-                    break;
-
-                // Pembayaran
-                case "3":
-                    pembayaran();
-                    break;
-
-                // mengganti PIN yang lama dengan yang baru.
-                case "4":
-                    ubahPIN();
-                    break;
-
-                    // Setor Tunai
-                case "5":
-                    setorTunai();
-                    break;
-
-                // Transfer
-                case "6":
-                    transfer();
-                    break;
-
-                case "0":
-                    break;
-                default:
-                    System.out.println("Menu tidak tersedia ");
-            }
+            do {
+                    switch (tampilanMenu()) {
+    
+                    // Tarik Tunai
+                    case "1":
+                        tarikTunai();
+                        opsiMenu();
+                        break;
+    
+                    // Informasi Saldo
+                    case "2":
+                        informasiSaldo();
+                        opsiMenu();
+                        break;
+    
+                    // Pembayaran
+                    case "3":
+                        pembayaran();
+                        opsiMenu();
+                        break;
+    
+                    // mengganti PIN yang lama dengan yang baru.
+                    case "4":
+                        ubahPIN();
+                        opsiMenu();
+                        break;
+    
+                        // Setor Tunai
+                    case "5":
+                        setorTunai();
+                        opsiMenu();
+                        break;
+    
+                    // Transfer
+                    case "6":
+                        transfer();
+                        opsiMenu();  
+                        break;
+    
+                    case "0":
+                        System.exit(0);
+                        break;
+                        
+                    default:
+                        System.out.println("Menu tidak tersedia ");
+                }
+    
+    
+            } while(lanjutTransaksi);
         } else if (konfirmasi.equals("2")) {
             System.out.println("\nAnda Belum punya akun?");
             System.out.println("Silahkan Registrasi terlebih dahulu ");
@@ -168,6 +181,21 @@ public class Main {
     }
     // End Menu
 
+    // mengulang menu transaksi
+    static void opsiMenu() {
+        System.out.println("Apakah anda ingin melakukan transaksi lain?");
+        System.out.println("1. Ya");
+        System.out.println("2. Tidak");
+        ulangMenu = sc.next();
+
+        if (ulangMenu.equals("1")) {
+            lanjutTransaksi = true;
+        } else {
+            lanjutTransaksi = false;
+        } 
+    }
+    // end mengulang menu transaksi
+
     // Fungsi untuk mencari indeks akun berdasarkan nama pengguna
     static int identifikasiUser(String nama) {
         for (int i = 0; i < namaUser.length; i++) {
@@ -216,26 +244,6 @@ public class Main {
         System.out.println("Informasi Saldo");
         System.out.println("Nama: " + namaUser[index]);
         System.out.println("Saldo: Rp" + saldo[index]);
-
-        // Option to quit or go back to the menu
-        System.out.println("\nApakah Anda ingin:");
-        System.out.println("1. Kembali ke Menu Utama");
-        System.out.println("2. Keluar");
-
-        int option = sc.nextInt();
-
-        switch (option) {
-            case 1:
-                tampilanMenu();
-                break;
-            case 2:
-                System.out.println("Terima kasih telah menggunakan layanan kami.");
-                System.exit(0);
-                break;
-            default:
-                System.out.println("Pilihan tidak valid.");
-                break;
-        }
     } else {
         System.out.println("Akun tidak ditemukan.");
     }
