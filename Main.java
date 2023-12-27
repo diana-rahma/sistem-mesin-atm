@@ -7,20 +7,20 @@ public class Main {
     // { "Varizky", "87654321", "200000000" },
     // { "Romy", "12341234", "100000000" }
     // };
+    static Scanner sc = new Scanner(System.in);
     static String[] namaUser = { "Diana", "Varizky", "Romy" };
     static int[] pinUser = { 1234, 6543, 1122 };
     static long[] saldo = { 1000000, 2000000, 3000000 };
-    static Scanner sc = new Scanner(System.in);
-    static String konfirmasi, Struk, Menu, sedangLogin, ulangMenu;
-    static long jmlSaldo = 150000000, Nominal;
+    static String konfirmasi, Struk, Menu, sedangLogin, ulangMenu, jenisBayar;
+    static long jmlSaldo = 150000000, Nominal, jumlahBayar, tagihan;
     static boolean selesaiTransaksi = false, lanjutTransaksi;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int pilihan, kodeBayar, kodeInstitusi, noRek, kodeBank, bankTujuan;
-        long Nominal, sisa, jumlahBayar, tagihan, nominalTransfer;
-        String Menu, Nama, Struk, Asal, Profesi, jenisBayar, jenisRek, Now, Now2, Past, New, New2;
+        int pilihan, kodeBank, bankTujuan;
+        long sisa, nominalTransfer;
+        String Nama, Asal, Profesi, Past, New, New2;
 
         System.out.println("*********************************************");
         System.out.println("*             SISTEM MESIN ATM              *");
@@ -60,13 +60,13 @@ public class Main {
                         opsiMenu();
                         break;
     
-                    // mengganti PIN yang lama dengan yang baru.
+                    // Ubah PIN
                     case "4":
                         ubahPIN();
                         opsiMenu();
                         break;
     
-                        // Setor Tunai
+                    // Setor Tunai
                     case "5":
                         setorTunai();
                         opsiMenu();
@@ -85,8 +85,6 @@ public class Main {
                     default:
                         System.out.println("Menu tidak tersedia ");
                 }
-    
-    
             } while(lanjutTransaksi);
         } else if (konfirmasi.equals("2")) {
             System.out.println("\nAnda Belum punya akun?");
@@ -133,7 +131,6 @@ public class Main {
         }
         return false;
     }
-
     // End Login User
 
     // Registrasi User
@@ -239,23 +236,21 @@ public class Main {
 
     // Fitur Informasi Saldo
     static void informasiSaldo() {
-    int index = identifikasiUser(sedangLogin);
-    if (index != -1) {
-        System.out.println("Informasi Saldo");
-        System.out.println("Nama: " + namaUser[index]);
-        System.out.println("Saldo: Rp" + saldo[index]);
-    } else {
-        System.out.println("Akun tidak ditemukan.");
+        int index = identifikasiUser(sedangLogin);
+        if (index != -1) {
+            System.out.println("Informasi Saldo");
+            System.out.println("Nama: " + namaUser[index]);
+            System.out.println("Saldo: Rp" + saldo[index]);
+        } else {
+            System.out.println("Akun tidak ditemukan.");
+        }
     }
-}
     // End Fitur Informasi Saldo
 
     // Fitur Pembayaran
     static void pembayaran() {
         int index = identifikasiUser(sedangLogin);
-        String jenisBayar;
         int kodeBayar, noCust;
-        long jumlahBayar, tagihan;
         long setor = saldo[index];
         if (index != -1) {
             System.out.println("Silahkan pilih jenis pembayaran / pembelian di bawah ini");
@@ -274,7 +269,6 @@ public class Main {
                     jumlahBayar = sc.nextLong();
                     saldo[index] -= jumlahBayar;
                     konfirmasiPembayaran();
-                    strukBayar(jumlahBayar);
                     break;
 
                 case "2":
@@ -287,7 +281,6 @@ public class Main {
                     jumlahBayar = sc.nextLong();
                     saldo[index] -= jumlahBayar;
                     konfirmasiPembayaran();
-                    strukBayar(jumlahBayar);
                     break;
 
                 case "3":
@@ -298,7 +291,6 @@ public class Main {
                     jumlahBayar = sc.nextLong();
                     saldo[index] -= jumlahBayar;
                     konfirmasiPembayaran();
-                    strukBayar(jumlahBayar);
                     break;
 
                 case "4":
@@ -309,7 +301,6 @@ public class Main {
                     jumlahBayar = sc.nextLong();
                     saldo[index] -= jumlahBayar;
                     konfirmasiPembayaran();
-                    strukBayar(jumlahBayar);
                     break;
                 default:
                     System.out.println("Jenis pembayaran tidak tersedia");
@@ -366,139 +357,89 @@ public class Main {
                 System.out.println("Sisa saldo anda   : Rp" + saldo[index]);
                 System.out.println("Terima kasih telah melakukan transaksi");
                 System.out.println("===============================================");
+            } else {
+                System.out.println("Tarik tunai gagal.");
             }
-        } else {
-            System.out.println("Tarik tunai gagal.");
-        }
+        } 
     }
     // End fitur Setor Tunai
 
     // Fitur Transfer
     static void transfer() {
-    int indexPengirim = identifikasiUser(sedangLogin);
+        int indexPengirim = identifikasiUser(sedangLogin);
 
-    if (indexPengirim != -1) {
-        System.out.println("Masukkan nama penerima: ");
-        String namaPenerima = sc.next();
+        if (indexPengirim != -1) {
+            System.out.println("Masukkan nama penerima: ");
+            String namaPenerima = sc.next();
 
-        int indexPenerima = identifikasiUser(namaPenerima);
+            int indexPenerima = identifikasiUser(namaPenerima);
 
-        if (indexPenerima != -1) {
-            System.out.println("Masukkan nominal yang ingin Anda transfer: ");
-            Nominal = sc.nextLong();
+            if (indexPenerima != -1) {
+                System.out.println("Masukkan nominal yang ingin Anda transfer: ");
+                Nominal = sc.nextLong();
 
-            // Biaya admin
-            System.out.println("Apakah Anda mentransfer ke bank yang sama?");
-            System.out.println("1. Ya");
-            System.out.println("2. Tidak");
-            int transferSameBank = sc.nextInt();
+                // Biaya admin
+                System.out.println("Apakah Anda mentransfer ke bank yang sama?");
+                System.out.println("1. Ya");
+                System.out.println("2. Tidak");
+                int transferSameBank = sc.nextInt();
 
-            if (transferSameBank == 2) {
-                System.out.println("Biaya admin: Rp20000");
-                Nominal += 20000;
-            } else {
-                if (Nominal < 500000) {
-                    System.out.println("Biaya admin: Rp10000");
-                    Nominal += 10000;
+                if (transferSameBank == 2) {
+                    System.out.println("Biaya admin: Rp20000");
+                    Nominal += 20000;
                 } else {
-                    System.out.println("Biaya admin: Gratis");
+                    if (Nominal < 500000) {
+                        System.out.println("Biaya admin: Rp10000");
+                        Nominal += 10000;
+                    } else {
+                        System.out.println("Biaya admin: Gratis");
+                    }
                 }
-            }
 
-            // Cek apakah saldo cukup
-            if (Nominal <= saldo[indexPengirim]) {
-                saldo[indexPengirim] -= Nominal;
+                // Cek apakah saldo cukup
+                if (Nominal <= saldo[indexPengirim]) {
+                    saldo[indexPengirim] -= Nominal;
 
-                System.out.println("Transfer berhasil.");
-                System.out.println("Jumlah transfer: Rp" + Nominal);
-                System.out.println("Sisa saldo Anda: Rp" + saldo[indexPengirim]);
+                    System.out.println("Transfer berhasil.");
+                    System.out.println("Jumlah transfer: Rp" + Nominal);
+                    System.out.println("Sisa saldo Anda: Rp" + saldo[indexPengirim]);
+                } else {
+                    System.out.println("Saldo tidak mencukupi untuk transfer tersebut.");
+                }
             } else {
-                System.out.println("Saldo tidak mencukupi untuk transfer tersebut.");
+                System.out.println("Penerima tidak ditemukan.");
             }
-        } else {
-            System.out.println("Penerima tidak ditemukan.");
         }
     }
-}
     // End Fitur Transfer
 
     // Konfirmasi pembayaran pengguna
     static void konfirmasiPembayaran() {
-        Scanner sc = new Scanner(System.in);
+        int index = identifikasiUser(sedangLogin);
         System.out.println("Apakah anda yakin untuk melakukan pembayaran?");
         System.out.println("1. Iya");
         System.out.println("2. Tidak");
         String data = sc.next();
         if (data.equals("1")) {
             System.out.println("Pembayaran akan diproses");
+            System.out.println("==========STRUK TRANSAKSI PEMBAYARAN==========");
+            System.out.println("Nominal transaksi : Rp" + jumlahBayar);
+            System.out.println("Sisa saldo anda   : Rp" + saldo[index]);
+            System.out.println("Terima kasih telah melakukan transaksi");
+            System.out.println("==============================================");
         } else {
-            System.out.println("Silahkan kembali ke menu utama");
+            System.out.println("Pembayaran dibatalkan.");
+            opsiMenu();
         }
     }
     // End konfirmasi pembayaran pengguna
 
     // Struk tarik tunai
     static void cetakStruk(long Nominal, long hasil) {
-
         System.out.println("===== STRUK TRANSAKSI =====");
-
         System.out.println("Nominal Transaksi: Rp " + Nominal);
         System.out.println("Sisa Saldo: Rp " + hasil);
         System.out.println("Terima kasih telah melakukan transaksi!");
     }
     // End Struk
-
-    // Struk Pembayaran
-    static void strukBayar(long jumlahBayar) {
-        int index = identifikasiUser(sedangLogin);
-        System.out.println("==========STRUK TRANSAKSI PEMBAYARAN==========");
-        System.out.println("Nominal transaksi : Rp" + jumlahBayar);
-        System.out.println("Sisa saldo anda   : Rp" + saldo[index]);
-        System.out.println("Terima kasih telah melakukan transaksi");
-        System.out.println("==============================================");
-    }
-    // End Struk pembayaran
-
-    // static void updateSaldo(String nama, long newSaldo, long biayaAdmin) {
-    // for (String[] user : akunUser) {
-    // if (user[0].equals(nama)) {
-    // user[2] = String.valueOf(newSaldo);
-    // break;
-    // }
-    // }
-    // }
-
-    // static long getSaldo(String nama) {
-    // for (String[] user : akunUser) {
-    // if (user[0].equals(nama)) {
-    // return Long.parseLong(user[2]);
-    // }
-    // }
-    // return 0;
-    // }
-
-    // Cetak Struk
-    // static void Struk(long Nominal, String Nama) {
-    // if (Struk.equals("1")) {
-    // System.out.println("Silahkan ambil uang senilai " + Nominal + " dan struk
-    // anda.");
-    // System.out.println("Sisa saldo anda sekarang: " + getSaldo(Nama));
-    // } else {
-    // System.out.println("Silahkan ambil uang Anda senilai " + Nominal);
-    // System.out.println("Sisa saldo anda sekarang: " + getSaldo(Nama));
-    // }
-    // }
-    // End Cetak Struk
-
-    // static void struk() {
-    // int index = identifikasiUser(sedangLogin);
-    // Date tanggalSekarang = new Date();
-    // SimpleDateFormat formatTanggal = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-    // String tanggal = formatTanggal.format(tanggalSekarang);
-    // System.out.println("==========STRUK TRANSAKSI==========");
-    // System.out.println("Tanggal/Waktu : "+tanggal);
-    // System.out.println("Jenis Transaksi : ");
-    // System.out.println("Sisa saldo : "+saldo[index]);
-    // System.out.println("");
-    // }
 }
